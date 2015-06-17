@@ -50,6 +50,7 @@ module.exports = function (creep) {
             var moveResult = creep.moveTo(Game.getObjectById(creep.memory.currentTarget.id), {reusePath: 10});
             if(moveResult === -2) {
                 creep.memory.currentTarget = undefined;
+                creep.memory._move = undefined;
             }
         }
     }
