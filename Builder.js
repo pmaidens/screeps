@@ -1,10 +1,9 @@
 module.exports = function (creep) {
-    
-    // TEMPORARY (hopefully) FIX FOR STALE MEMORY
+
 	if(creep.memory.currentTarget) {
 	    creep.memory.currentTarget = Game.getObjectById(creep.memory.currentTarget.id);
 	}
-    
+
     if(!creep.memory.currentTarget || (creep.memory.currentTarget.progress ? (creep.energy === 0) : (creep.energy === creep.energyCapacity || !creep.memory.currentTarget.energy) ) ) {
         if(!creep.memory.currentTarget || creep.energy === 0) {
             var target;
