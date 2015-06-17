@@ -26,7 +26,7 @@ Object.keys(Memory.roleList).forEach(function(roleType) {
 });
 
 if((Game.time % 101) === 0) {
-    // StructureMaintainer();
+    StructureMaintainer();
 }
 
 // MilitaryController.calculateOrders();
