@@ -16,12 +16,19 @@ module.exports = function (creep) {
 
     	} else {
 
-    		creep.memory.currentTarget = creep.pos.findClosest(FIND_MY_SPAWNS, {
+            // This is temporarily broken for some reason. Uncomment and remove replacement when fixed.
+    		/*creep.memory.currentTarget = creep.pos.findClosest(FIND_MY_SPAWNS, {
 	    	    filter: function(spawn) {
     		            return (spawn.energy < spawn.energyCapacity);
     		        },
 		        algorithm: "astar"
-    		});
+    		});*/
+            creep.memory.currentTarget = creep.pos.findClosest(FIND_MY_STRUCTURES, {
+                filter: function(spawn) {
+                        return (spawn.structureType === "spawn" && spawn.energy < spawn.energyCapacity);
+                    },
+                algorithm: "astar"
+            });
 
     		if(!creep.memory.currentTarget) {
 	    	    creep.memory.currentTarget = creep.pos.findClosest(FIND_MY_STRUCTURES, {

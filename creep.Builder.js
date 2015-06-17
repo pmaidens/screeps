@@ -12,7 +12,7 @@ module.exports = function (creep) {
             elements.some(function(elementType) {
                 creep.memory.currentTarget = creep.pos.findClosest(elementType, {
                     filter: function(element) {
-                        return (element.energy && (element.structureType ? ([STRUCTURE_LINK, "spawn"]).indexOf(element.structureType) > -1 : true) )
+                        return (element.energy && (element.name || (element.structureType ? element.structureType === STRUCTURE_LINK : true) ) )
                     },
                     algorithm: "astar"
                 });
