@@ -48,17 +48,17 @@ module.exports = {
             }
         });
         
-        // If there is leftover energy and all creeps have been spawned, transfer it to the closest builder
+        // If there is leftover energy and all creeps have been spawned, transfer it to the all the near builders
         if(spawn.energy > 0 && this.creepsComplete()) {
-            var closestBuilder = spawn.pos.findClosest(FIND_MY_CREEPS, {
-                filter: function(creep) {
-                    return (creep.memory.type) === "Builder";
+            Memory.roleList.Builder.some(function(name) {
+                var creep = Game.creeps[name];
+                if(spawn.pos.isNearTo(creep) && creep.energy < creep.energyCapacity) {
+                    spawn.transferEnergy(creep, (creep.energyCapacity > spawn.energy ? spawn.energy : creep.energyCapacity));
+                }
+                if(spawn.energy === 0) {
+                    return true; // break
                 }
             });
-            
-            if(spawn.pos.isNearTo(closestBuilder)) {
-                spawn.transferEnergy(closestBuilder, (closestBuilder.energyCapacity > spawn.energy ? spawn.energy : closestBuilder.energyCapacity));
-            }
         }
     },
     
