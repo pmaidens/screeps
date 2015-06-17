@@ -1,10 +1,10 @@
 module.exports = function (creep) {
 
-	if(creep.memory.currentTarget) {
-	    creep.memory.currentTarget = Game.getObjectById(creep.memory.currentTarget.id);
-	}
+    if(creep.memory.currentTarget) {
+        creep.memory.currentTarget = Game.getObjectById(creep.memory.currentTarget.id);
+    }
 
-    if(!creep.memory.currentTarget || (creep.memory.currentTarget.progress ? (creep.energy === 0) : (creep.energy === creep.energyCapacity || !creep.memory.currentTarget.energy) ) ) {
+    if(!creep.memory.currentTarget || (creep.memory.currentTarget.progress ? (creep.energy === 0) : (creep.energy === creep.energyCapacity || !creep.memory.currentTarget.energy) ) || (creep.memory.currentTarget.structureType === STRUCTURE_RAMPART && creep.memory.currentTarget.hits >= 1500) ) {
         if(!creep.memory.currentTarget || creep.energy === 0) {
             var target;
             var elements = [FIND_MY_SPAWNS, FIND_DROPPED_ENERGY, FIND_MY_STRUCTURES];
@@ -20,7 +20,7 @@ module.exports = function (creep) {
             });
 
         } else {
-            var target = Game.getObjectById(Memory.repairList.shift());
+            var target = Game.getObjectById(Memory.repairList[0]);
             if(!target) {
                 target = creep.pos.findClosest(FIND_CONSTRUCTION_SITES);
             }
@@ -36,14 +36,16 @@ module.exports = function (creep) {
     if(creep.memory.currentTarget) {
         if(creep.pos.isNearTo(Game.getObjectById(creep.memory.currentTarget.id))) {
             if(creep.memory.currentTarget.progress !== undefined) {
-                if(creep.memory.currentTarget.structureType !== STRUCTURE_CONTROLLER) {
-                    creep.build(Game.getObjectById(creep.memory.currentTarget.id));
-                } else {
+                if(creep.memory.currentTarget.structureType === STRUCTURE_CONTROLLER) {
                     creep.upgradeController(Game.getObjectById(creep.memory.currentTarget.id));
+                } else {
+                    creep.build(Game.getObjectById(creep.memory.currentTarget.id));
                 }
             } else {
                 if(creep.memory.currentTarget instanceof Energy) {
                     creep.pickup(Game.getObjectById(creep.memory.currentTarget.id));
+                } else if(creep.memory.currentTarget.structureType) {
+                    creep.repair(Game.getObjectById(creep.memory.currentTarget.id));
                 }
             }
         } else {
