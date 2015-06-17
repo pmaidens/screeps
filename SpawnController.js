@@ -1,0 +1,76 @@
+module.exports = {
+    creepTypes: [
+        {
+            name: "Harvester",
+            limit: 6,
+            // body: [WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE],
+            body: [WORK, WORK, CARRY, CARRY, MOVE, MOVE],
+            role: "Civilian"
+        }, {
+            name: "Builder",
+            limit: 6,
+            // limit: 0,
+            // body: [WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE],
+            body: [WORK, WORK, CARRY, CARRY, MOVE, MOVE],
+            role: "Civilian"
+        }, {
+            name: "Enforcer",
+            // limit: 15,
+            limit: 0,
+            body: [MOVE, ATTACK, ATTACK, ATTACK],
+            role: "Military"
+        }, {
+            name: "Ranger",
+            // limit: 10,
+            // limit: 5,
+            limit: 0,
+            body: [RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, MOVE, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH],
+            role: "Military"
+        }
+    ],
+    
+    decide: function(spawn) {
+        
+        // Determine what to spawn
+        this.creepTypes.some(function(type) {
+            if(Memory.roleList[type.name].length < type.limit) {
+                if(spawn.canCreateCreep(type.body) >= 0) {
+
+                    var creepName = spawn.createCreep(type.body, undefined, {
+                        type: type.name
+                    });
+
+                    Memory.roleList[type.name].push(creepName);
+                    Memory.spawning.push(creepName);
+
+                    return true;
+                }
+            }
+        });
+        
+        // If there is leftover energy and all creeps have been spawned, transfer it to the closest builder
+        if(spawn.energy > 0 && this.creepsComplete()) {
+            var closestBuilder = spawn.pos.findClosest(FIND_MY_CREEPS, {
+                filter: function(creep) {
+                    return (creep.memory.type) === "Builder";
+                }
+            });
+            
+            if(spawn.pos.isNearTo(closestBuilder)) {
+                spawn.transferEnergy(closestBuilder, (closestBuilder.energyCapacity > spawn.energy ? spawn.energy : closestBuilder.energyCapacity));
+            }
+        }
+    },
+    
+    creepsComplete: function() {
+        var complete = true;
+        this.creepTypes.some(function(type) {
+            if(type.limit > Memory.roleList[type.name].length) {
+                complete = false;
+                return true;
+            }
+        });
+        return complete;
+    }
+}
+
