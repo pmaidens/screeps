@@ -42,7 +42,7 @@ module.exports = function (creep) {
                 creep.harvest(Game.getObjectById(creep.memory.currentTarget.id));
             }
         } else {
-            var moveResult = creep.moveTo(Game.getObjectById(creep.memory.currentTarget.id));
+            var moveResult = creep.moveTo(Game.getObjectById(creep.memory.currentTarget.id), {reusePath: 5});
             if(moveResult === -2) {
                 creep.memory.currentTarget = undefined;
             }

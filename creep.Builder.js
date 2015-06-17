@@ -47,7 +47,7 @@ module.exports = function (creep) {
                 }
             }
         } else {
-            var moveResult = creep.moveTo(Game.getObjectById(creep.memory.currentTarget.id));
+            var moveResult = creep.moveTo(Game.getObjectById(creep.memory.currentTarget.id), {reusePath: 10});
             if(moveResult === -2) {
                 creep.memory.currentTarget = undefined;
             }
