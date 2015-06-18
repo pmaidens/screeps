@@ -14,6 +14,9 @@ module.exports = function() {
                 Memory.repairList.splice(index, 1);
             }
         }
+        Memory.repairList.sort(function(a, b) {
+            return Game.getObjectById(b).hits - Game.getObjectById(a).hits;
+        });
     });
     console.log("Finished " + Game.getUsedCpu());
 }
