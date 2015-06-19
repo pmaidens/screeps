@@ -20,7 +20,20 @@ module.exports = function (creep) {
             });
 
         } else {
-            var target = Game.getObjectById(Memory.repairList[0]);
+            var target;
+
+            for(var i = 0, i < Memory.repairList.length; i++) {
+                var repair = Game.getObjectById(Memory.repairList[i]);
+                if(repair.hits === repair.hitsMax) {
+                    Memory.repairList.splice(i, 1);
+                    i--;
+                    continue;
+                } else {
+                    target = repair;
+                    break;
+                }
+            }
+
             if(!target) {
                 target = creep.pos.findClosest(FIND_CONSTRUCTION_SITES);
             }
@@ -33,6 +46,7 @@ module.exports = function (creep) {
             creep.memory.currentTarget = Game.flags.Rally_Builders;
         }
     }
+
     if(creep.memory.currentTarget) {
         if(creep.pos.isNearTo(Game.getObjectById(creep.memory.currentTarget.id))) {
             if(creep.memory.currentTarget.progress !== undefined) {
@@ -56,8 +70,4 @@ module.exports = function (creep) {
             }
         }
     }
-    
-
 }
-
-
