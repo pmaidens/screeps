@@ -5,14 +5,14 @@ module.exports = function (creep) {
     }
 
     if(!creep.memory.currentTarget || (creep.memory.currentTarget.progress ? (creep.energy === 0) : (creep.energy === creep.energyCapacity || !creep.memory.currentTarget.energy) ) || (creep.memory.currentTarget.structureType === STRUCTURE_RAMPART && creep.memory.currentTarget.hits >= 1500) ) {
+        var target;
         if(!creep.memory.currentTarget || creep.energy === 0) {
-            var target;
             var elements = [FIND_MY_SPAWNS, FIND_DROPPED_ENERGY, FIND_MY_STRUCTURES];
 
             elements.some(function(elementType) {
                 creep.memory.currentTarget = creep.pos.findClosest(elementType, {
                     filter: function(element) {
-                        return (element.energy && (element.name || (element.structureType ? element.structureType === STRUCTURE_LINK : true) ) )
+                        return (element.energy && (element.name || (element.structureType ? element.structureType === STRUCTURE_LINK : true) ) );
                     },
                     algorithm: "astar"
                 });
@@ -20,7 +20,6 @@ module.exports = function (creep) {
             });
 
         } else {
-            var target;
 
             for(var i = 0; i < Memory.repairList.length; i++) {
                 var repair = Game.getObjectById(Memory.repairList[i]);
@@ -70,4 +69,4 @@ module.exports = function (creep) {
             }
         }
     }
-}
+};

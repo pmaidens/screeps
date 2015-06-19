@@ -6,8 +6,8 @@ module.exports = {
         Builder: require("creep.Builder"),
         Ranger: require("creep.Ranger")
     },
-    
+
     decide: function(creep) {
         this.roleControllerMap[creep.memory.type](creep);
     }
-}
+};

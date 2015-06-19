@@ -35,8 +35,9 @@ if((Game.time % 101) === 0) {
 
 // TODO: Create military AI
 // TODO: Expand AI to multi-room
-// TODO: Store path in creep memory. Move based on that.
+// TODO: Store path in creep memory. Move based on that. - Kind of working. I think a custom function would work better
 // TODO: See if I can expand the memory object somehow to store object references instead of just JSON
+// TODO: Create a ASM.js version of A* to help optimize
 // TODO: Destroy SourceKeepers
 // TODO: Try to replace creep.memory.currentTarget with creep.prototype[creep.name].currentTarget to see if we can remove the getObjectById
 // TODO: Export AI behaviour to config files

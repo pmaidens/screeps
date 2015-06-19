@@ -12,5 +12,4 @@ module.exports = function (creep) {
     } else {
         creep.moveTo(target);
     }
-}
-
+};

@@ -28,9 +28,9 @@ module.exports = {
             role: "Military"
         }
     ],
-    
+
     decide: function(spawn) {
-        
+
         // Determine what to spawn
         this.creepTypes.some(function(type) {
             if(Memory.roleList[type.name].length < type.limit) {
@@ -47,7 +47,7 @@ module.exports = {
                 }
             }
         });
-        
+
         // If there is leftover energy and all creeps have been spawned, transfer it to the all the near builders
         if(spawn.energy > 0 && this.creepsComplete()) {
             Memory.roleList.Builder.some(function(name) {
@@ -61,7 +61,7 @@ module.exports = {
             });
         }
     },
-    
+
     creepsComplete: function() {
         var complete = true;
         this.creepTypes.some(function(type) {
@@ -72,5 +72,4 @@ module.exports = {
         });
         return complete;
     }
-}
-
+};

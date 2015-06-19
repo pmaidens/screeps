@@ -10,7 +10,7 @@ module.exports = {
         } else {
             // Memory.Military.Target = Game.flags["Army Rally Point"].id;
         }
-        
+
         Memory.Military.Target = Game.spawns.Spawn_1.id;
     }
-}
+};

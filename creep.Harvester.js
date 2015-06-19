@@ -1,5 +1,5 @@
 module.exports = function (creep) {
-	
+
 	// TEMPORARY (hopefully) FIX FOR STALE MEMORY
 	if(creep.memory.currentTarget) {
 	    creep.memory.currentTarget = Game.getObjectById(creep.memory.currentTarget.id);
@@ -57,6 +57,4 @@ module.exports = function (creep) {
         }
     }
 
-}
-
-
+};
