@@ -22,7 +22,7 @@ module.exports = function (creep) {
         } else {
             var target;
 
-            for(var i = 0, i < Memory.repairList.length; i++) {
+            for(var i = 0; i < Memory.repairList.length; i++) {
                 var repair = Game.getObjectById(Memory.repairList[i]);
                 if(repair.hits === repair.hitsMax) {
                     Memory.repairList.splice(i, 1);
