@@ -11,7 +11,7 @@ module.exports = function() {
         Memory.repairList.forEach(function (id) {
             var structure = Game.getObjectById(id);
 
-            if(structure.hits >= structure.hitsMax*0.75) {
+            if(!structure || structure.hits >= structure.hitsMax*0.75) {
                 Memory.repairList.splice(Memory.repairList.indexOf(id), 1);
             }
         });
