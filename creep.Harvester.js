@@ -1,5 +1,20 @@
 module.exports = function (creep) {
 
+    if(creep.energy === creep.energyCapacity) {
+        var mules = creep.pos.findInRange(FIND_MY_CREEPS,1,{
+            filter: function (creep) {
+                return creep.type === "Mule" && creep.energy < creep.energyCapacity;
+            }
+        });
+
+        mules.some(function(mule) {
+            creep.transferEnergy(mule, mule.energyCapacity - mule.energy > creep.energy ? creep.energy : mule.energyCapacity - mule.energy);
+            if(!creep.energy) {
+                return true;
+            }
+        });
+    }
+
 	if(creep.memory.currentTarget) {
 	    creep.memory.currentTarget = Game.getObjectById(creep.memory.currentTarget.id);
 	}
@@ -9,7 +24,7 @@ module.exports = function (creep) {
 
         if(creep.energy === 0) {
 
-    		creep.memory.currentTarget = creep.pos.findClosest(FIND_SOURCES, {
+    		creep.memory.currentTarget = creep.pos.findClosest(FIND_SOURCES_ACTIVE, {
 	    	    algorithm: "astar"
 		    });
 
