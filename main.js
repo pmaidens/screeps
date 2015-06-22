@@ -32,7 +32,9 @@ if((Game.time % 101) === 0) {
 // MilitaryController.calculateOrders();
 
 
-
+/** TODO LIST:
+ *  - Rework AI to remove centralized control
+ */
 // TODO: Create military AI
 // TODO: Expand AI to multi-room
 // TODO: Store path in creep memory. Move based on that. - Kind of working. I think a custom function would work better
