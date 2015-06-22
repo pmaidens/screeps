@@ -44,7 +44,7 @@ module.exports = {
             });
         }
 
-        var desiredBehaviour = creep.memory.behaviour || default;
+        var desiredBehaviour = creep.memory.behaviour || "default";
 
         if(this.behaviours[desiredBehaviour].complete(creep)) {
             if(creep.energy === creep.energyCapacity) {

@@ -42,8 +42,8 @@ module.exports = {
                     var creepName = spawn.createCreep(type.body, undefined, {
                         type: type.name,
                         behaviour: "Spawning",
-                        creep.memory.currentTarget = {},
-                        creep.memory.movement = {
+                        currentTarget: {},
+                        movement: {
                             path: [],
                             step: 0,
                             lastPos: spawn.pos,
