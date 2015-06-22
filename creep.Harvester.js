@@ -1,5 +1,6 @@
 module.exports = function (creep) {
 
+    // If at full capacity, transfer the energy to any available mules
     if(creep.energy === creep.energyCapacity) {
         var mules = creep.pos.findInRange(FIND_MY_CREEPS,1,{
             filter: function (creep) {
@@ -15,6 +16,7 @@ module.exports = function (creep) {
         });
     }
 
+    // Target aquisition
 	if(creep.memory.currentTarget) {
 	    creep.memory.currentTarget = Game.getObjectById(creep.memory.currentTarget.id);
 	}
@@ -47,6 +49,7 @@ module.exports = function (creep) {
 	    }
     }
 
+    // Decide what action to take based on the target
     if(creep.memory.currentTarget) {
         if(creep.pos.isNearTo(Game.getObjectById(creep.memory.currentTarget.id))) {
             if(creep.memory.currentTarget.structureType) {
