@@ -3,8 +3,7 @@ module.exports = {
         {
             name: "Harvester",
             limit: 6,
-            // body: [WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE],
-            body: [WORK, WORK, CARRY, CARRY, MOVE, MOVE],
+            body: [WORK, WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE],
             role: "Civilian"
         }, {
             name: "Mule",
@@ -15,8 +14,7 @@ module.exports = {
             name: "Builder",
             limit: 6,
             // limit: 0,
-            // body: [WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE],
-            body: [WORK, WORK, CARRY, CARRY, MOVE, MOVE],
+            body: [WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
             role: "Civilian"
         }, {
             name: "Enforcer",
