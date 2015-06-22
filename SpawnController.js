@@ -14,7 +14,7 @@ module.exports = {
             name: "Builder",
             limit: 6,
             // limit: 0,
-            body: [WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
+            body: [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE],
             role: "Civilian"
         }, {
             name: "Enforcer",
