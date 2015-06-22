@@ -40,7 +40,16 @@ module.exports = {
                 if(spawn.canCreateCreep(type.body) >= 0) {
 
                     var creepName = spawn.createCreep(type.body, undefined, {
-                        type: type.name
+                        type: type.name,
+                        behaviour: "Spawning",
+                        creep.memory.currentTarget = {},
+                        creep.memory.movement = {
+                            path: [],
+                            step: 0,
+                            lastPos: spawn.pos,
+                            lastCalc: 0,
+                            targetPos: spawn.pos
+                        }
                     });
 
                     Memory.roleList[type.name].push(creepName);
