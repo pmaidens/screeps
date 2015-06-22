@@ -56,4 +56,4 @@ module.exports = {
 
         this.behaviours[desiredBehaviour].algorithm(creep);
     }
-}
+};
