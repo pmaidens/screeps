@@ -25,8 +25,13 @@ Creep.prototype.advMove = function(target) {
         this.memory.movement.lastCalc = this.memory.movement.path.length;
     }
     this.memory.movement.lastPos = this.pos;
-    this.move(this.memory.movement.path[this.memory.movement.step].direction);
-    this.memory.movement.step = this.memory.movement.step + 1;
+    if(this.memory.movement.path.length) {
+        this.move(this.memory.movement.path[this.memory.movement.step].direction);
+        this.memory.movement.step = this.memory.movement.step + 1;
+        return OK;
+    } else {
+        return ERR_NOT_FOUND;
+    }
 };
 
 for(var name in Game.spawns) {
