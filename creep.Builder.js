@@ -31,7 +31,7 @@ module.exports = {
             }
         },
         Upgrade: {
-            algorithm: require("creep.Builder.behaviour.Upgrader"),
+            algorithm: require("creep.Builder.behaviour.Upgrade"),
             complete: function (creep) {
                 return creep.energy === 0;
             }

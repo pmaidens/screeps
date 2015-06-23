@@ -1,6 +1,6 @@
 module.exports = function (creep) {
     // Aquire target
-    if(creep.memory.currentTarget.ticksToRegeneration === undefined || !creep.memory.currentTarget.energy || !creep.memory.movement.path.length) {
+    if(!creep.memory.currentTarget.structureType || creep.memory.currentTarget.energy === creep.memory.currentTarget.energyCapacity) {
         creep.memory.currentTarget = creep.pos.findClosest(FIND_MY_SPAWNS, {
             filter: function(spawn) {
                     return (spawn.energy < spawn.energyCapacity);
