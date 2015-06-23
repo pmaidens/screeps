@@ -20,7 +20,7 @@ module.exports = function (creep) {
 
     // Execute on target
     if(creep.pos.isNearTo(creep.memory.currentTarget.pos.x, creep.memory.currentTarget.pos.y)) {
-        creep.harvest(Game.getObjectById(creep.memory.currentTarget.id));
+        creep.transferEnergy(Game.getObjectById(creep.memory.currentTarget.id));
     } else {
         creep.advMove(creep.memory.currentTarget);
     }
