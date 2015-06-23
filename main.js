@@ -3,14 +3,41 @@ var CreepController = require("CreepController");
 var MilitaryController = require("MilitaryController");
 var StructureMaintainer = require("StructureMaintainer");
 
+Creep.prototype.advMove = function(target) {
+    var reCalc = false;
+
+    if(!target.pos) {
+        return;
+    }
+
+    if (!this.memory.movement || !Array.isArray(this.memory.movement.path) || !this.memory.movement.lastPos || this.memory.movement.step === undefined || this.memory.movement.lastCalc === undefined) {
+        reCalc = true;
+    }
+
+    if(reCalc || !this.memory.movement.path.length || target.pos !== this.memory.movement.targetPos || JSON.stringify(this.pos) === this.memory.movement.lastPos || this.memory.movement.step >= (this.memory.movement.lastCalc/2 || undefined) ) {
+        this.memory.movement = {
+            path: this.pos.findPathTo(target.pos.x, target.pos.y),
+            step: 0,
+            lastPos: this.pos,
+            lastCalc: 0,
+            targetPos: target.pos
+        };
+        this.memory.movement.lastCalc = this.memory.movement.path.length;
+    }
+    this.memory.movement.lastPos = this.pos;
+    this.move(this.memory.movement.path[this.memory.movement.step].direction);
+    this.memory.movement.step = this.memory.movement.step + 1;
+};
+
 for(var name in Game.spawns) {
     spawnController.decide(Game.spawns[name]);
 }
 
+
 Object.keys(Memory.roleList).forEach(function(roleType) {
     Memory.roleList[roleType].forEach(function(name, index) {
         var spawningIndex = Memory.spawning.indexOf(name);
-        
+
         if(!Game.creeps[name]) {
             if(spawningIndex < 0) {
                 Memory.roleList[roleType].splice(index, 1);
@@ -43,6 +70,3 @@ if((Game.time % 101) === 0) {
 // TODO: Destroy SourceKeepers
 // TODO: Try to replace creep.memory.currentTarget with creep.prototype[creep.name].currentTarget to see if we can remove the getObjectById
 // TODO: Export AI behaviour to config files
-
-
-

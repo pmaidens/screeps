@@ -3,7 +3,7 @@ module.exports = {
         default: {
             algorithm: require("creep.Harvester.behaviour.Default"),
             complete: function(creep) {
-                return false;
+                return true;
             }
         },
         Spawning: {
@@ -44,9 +44,7 @@ module.exports = {
             });
         }
 
-        var desiredBehaviour = creep.memory.behaviour || "default";
-
-        if(this.behaviours[desiredBehaviour].complete(creep)) {
+        if(this.behaviours[creep.memory.behaviour].complete(creep)) {
             if(creep.energy === creep.energyCapacity) {
                 creep.memory.behaviour = "Dump";
             } else {
@@ -54,6 +52,6 @@ module.exports = {
             }
         }
 
-        this.behaviours[desiredBehaviour].algorithm(creep);
+        this.behaviours[creep.memory.behaviour || "default"].algorithm(creep);
     }
 };
