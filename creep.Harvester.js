@@ -1,69 +1,57 @@
-module.exports = function (creep) {
-
-    // If at full capacity, transfer the energy to any available mules
-    if(creep.energy === creep.energyCapacity) {
-        var mules = creep.pos.findInRange(FIND_MY_CREEPS,1,{
-            filter: function (creep) {
-                return creep.type === "Mule" && creep.energy < creep.energyCapacity;
-            }
-        });
-
-        mules.some(function(mule) {
-            creep.transferEnergy(mule, mule.energyCapacity - mule.energy > creep.energy ? creep.energy : mule.energyCapacity - mule.energy);
-            if(!creep.energy) {
+module.exports = {
+    behaviours: {
+        default: {
+            algorithm: require("creep.Harvester.behaviour.Default"),
+            complete: function(creep) {
                 return true;
             }
-        });
-    }
-
-    // Target aquisition
-	if(creep.memory.currentTarget) {
-	    creep.memory.currentTarget = Game.getObjectById(creep.memory.currentTarget.id);
-	}
-
-    if(!creep.memory.currentTarget || (creep.memory.currentTarget.structureType ? ((creep.memory.currentTarget.energy === creep.memory.currentTarget.energyCapacity) || (creep.energy === 0)) : (creep.energy === creep.energyCapacity) ) ) {
-        var target;
-
-        if(creep.energy === 0) {
-
-    		creep.memory.currentTarget = creep.pos.findClosest(FIND_SOURCES_ACTIVE, {
-	    	    algorithm: "astar"
-		    });
-
-    	} else {
-    		creep.memory.currentTarget = creep.pos.findClosest(FIND_MY_SPAWNS, {
-	    	    filter: function(spawn) {
-    		            return (spawn.energy < spawn.energyCapacity);
-    		        },
-		        algorithm: "astar"
-    		});
-
-    		if(!creep.memory.currentTarget) {
-	    	    creep.memory.currentTarget = creep.pos.findClosest(FIND_MY_STRUCTURES, {
-    	    	    filter: function(structure) {
-    		             return (structure.structureType === STRUCTURE_EXTENSION) && (structure.energy < structure.energyCapacity);
-    		        },
-    		        algorithm: "astar"
-    		    });
-		    }
-	    }
-    }
-
-    // Decide what action to take based on the target
-    if(creep.memory.currentTarget) {
-        if(creep.pos.isNearTo(Game.getObjectById(creep.memory.currentTarget.id))) {
-            if(creep.memory.currentTarget.structureType) {
-                creep.transferEnergy(Game.getObjectById(creep.memory.currentTarget.id));
-            } else {
-                creep.harvest(Game.getObjectById(creep.memory.currentTarget.id));
+        },
+        Spawning: {
+            algorithm: require("creep.Harvester.behaviour.Spawning"),
+            complete: function (creep) {
+                return false;
             }
-        } else {
-            var moveResult = creep.moveTo(Game.getObjectById(creep.memory.currentTarget.id), {reusePath: 5});
-            if(moveResult === -2) {
-                creep.memory.currentTarget = undefined;
-                creep.memory._move = undefined;
+        },
+        Harvest: {
+            algorithm: require("creep.Harvester.behaviour.Harvest"),
+            complete: function(creep) {
+                return creep.energy === creep.energyCapacity;
+            }
+        },
+        Dump: {
+            algorithm: require("creep.Harvester.behaviour.Dump"),
+            complete: function(creep) {
+                return !creep.energy;
             }
         }
-    }
+    },
 
+    compute: function(creep) {
+
+        // If at full capacity, transfer the energy to any available mules
+        if(creep.energy === creep.energyCapacity) {
+            var mules = creep.pos.findInRange(FIND_MY_CREEPS,1,{
+                filter: function (creep) {
+                    return creep.type === "Mule" && creep.energy < creep.energyCapacity;
+                }
+            });
+
+            mules.some(function(mule) {
+                creep.transferEnergy(mule, mule.energyCapacity - mule.energy > creep.energy ? creep.energy : mule.energyCapacity - mule.energy);
+                if(!creep.energy) {
+                    return true;
+                }
+            });
+        }
+
+        if(this.behaviours[creep.memory.behaviour].complete(creep)) {
+            if(creep.energy === creep.energyCapacity) {
+                creep.memory.behaviour = "Dump";
+            } else {
+                creep.memory.behaviour = "Harvest";
+            }
+        }
+
+        this.behaviours[creep.memory.behaviour || "default"].algorithm(creep);
+    }
 };

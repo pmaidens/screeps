@@ -1,21 +1,11 @@
-module.exports = function (creep) {
+module.exports = {
+    behaviours: {
+        default: require("creep.Ranger.behaviour.Default")
+    },
 
-    if(!creep.memory.currentTarget) {
-    	creep.memory.currentTarget = Memory.Military.Target;
-    }
+    compute: function(creep) {
+        var desiredBehaviour = "default";
 
-    var target = Game.getObjectById(creep.memory.currentTarget);
-
-    // console.log(JSON.stringify(target));
-    if(target.my === false) {
-        if(creep.pos.getRangeTo(target) < 3) {
-            // creep.rangedAttack(target);
-            creep.rangedMassAttack();
-        } else {
-            creep.moveTo(target);
-        }
-    } else {
-        creep.moveTo(target);
-        creep.memory.currentTarget = Memory.Military.Target;
+        return this.behaviours[desiredBehaviour](creep);
     }
 };

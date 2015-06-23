@@ -8,6 +8,6 @@ module.exports = {
     },
 
     decide: function(creep) {
-        this.roleControllerMap[creep.memory.type](creep);
+        this.roleControllerMap[creep.memory.type].compute(creep);
     }
 };
