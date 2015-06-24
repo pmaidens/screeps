@@ -1,19 +1,17 @@
 module.exports = function (creep) {
 	// Aquire target
-	var target = Game.getObjectById(creep.memory.currentTarget);
-	if(!target || target.ticksToRegeneration === undefined || !target.energy || !creep.memory.movement.path.length) {
+	if(!creep.memory.currentTarget || creep.memory.currentTarget.ticksToRegeneration === undefined || !creep.memory.currentTarget.energy || !creep.memory.movement.path.length) {
 		creep.memory.currentTarget = creep.pos.findClosest(FIND_SOURCES_ACTIVE, {
     	    algorithm: "astar"
 	    });
 	}
-	target = Game.getObjectById(creep.memory.currentTarget);
 
 	// Execute on target
-	if(target) {
-		if(creep.pos.isNearTo(target)) {
-			creep.harvest(target);
+	if(creep.memory.currentTarget) {
+		if(creep.pos.isNearTo(creep.memory.currentTarget.pos.x, creep.memory.currentTarget.pos.y)) {
+			creep.harvest(Game.getObjectById(creep.memory.currentTarget.id));
 		} else {
-			creep.advMove(target);
+			creep.advMove(creep.memory.currentTarget);
 		}
 	}
 };

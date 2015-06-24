@@ -1,7 +1,6 @@
 module.exports = function (creep) {
     // Aquire target
-    var target = Game.getObjectById(creep.memory.currentTarget);
-    if(!target || !target.structureType || target.energy === target.energyCapacity) {
+    if(!creep.memory.currentTarget.structureType || creep.memory.currentTarget.energy === creep.memory.currentTarget.energyCapacity) {
         creep.memory.currentTarget = creep.pos.findClosest(FIND_MY_SPAWNS, {
             filter: function(spawn) {
                     return (spawn.energy < spawn.energyCapacity);
@@ -9,7 +8,7 @@ module.exports = function (creep) {
             algorithm: "astar"
         });
 
-        if(!target) {
+        if(!creep.memory.currentTarget) {
             creep.memory.currentTarget = creep.pos.findClosest(FIND_MY_STRUCTURES, {
                 filter: function(structure) {
                      return (structure.structureType === STRUCTURE_EXTENSION) && (structure.energy < structure.energyCapacity);
@@ -18,14 +17,13 @@ module.exports = function (creep) {
             });
         }
     }
-    target = Game.getObjectById(creep.memory.currentTarget);
 
     // Execute on target
-    if(target) {
-        if(creep.pos.isNearTo(target)) {
-            creep.transferEnergy(target);
+    if(creep.memory.currentTarget) {
+        if(creep.pos.isNearTo(creep.memory.currentTarget.pos.x, creep.memory.currentTarget.pos.y)) {
+            creep.transferEnergy(Game.getObjectById(creep.memory.currentTarget.id));
         } else {
-            creep.advMove(target);
+            creep.advMove(creep.memory.currentTarget);
         }
     }
 };
