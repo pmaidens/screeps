@@ -3,6 +3,16 @@ var CreepController = require("CreepController");
 var MilitaryController = require("MilitaryController");
 var StructureMaintainer = require("StructureMaintainer");
 
+Memory.sources = Memory.sources || {};
+Object.defineProperty(Source.prototype, "memory", {
+    enumerable : true,
+    configurable : false,
+    get: function () {
+        Memory.sources[this.id] = Memory.sources[this.id] || {};
+        return Memory.sources[this.id];
+    }
+});
+
 Creep.prototype.advMove = function(target) {
     var reCalc = false;
 

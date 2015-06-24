@@ -4,7 +4,8 @@ module.exports = {
         Harvester: require("creep.Harvester"),
         Enforcer: require("creep.Enforcer"),
         Builder: require("creep.Builder"),
-        Ranger: require("creep.Ranger")
+        Ranger: require("creep.Ranger"),
+        Mule: require("creep.Mule")
     },
 
     decide: function(creep) {
