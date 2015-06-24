@@ -1,4 +1,8 @@
 module.exports = function (creep) {
+    if(creep.memory.currentTarget) {
+        creep.memory.currentTarget = Game.getObjectById(creep.memory.currentTarget.id);
+    }
+
     // Aquire target
     if(!creep.memory.currentTarget || !creep.memory.currentTarget.energy || creep.memory.currentTarget.energy === 0) {
         var elements = [FIND_DROPPED_ENERGY, FIND_MY_STRUCTURES];

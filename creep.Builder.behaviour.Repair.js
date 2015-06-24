@@ -1,4 +1,8 @@
 module.exports = function(creep) {
+    if(creep.memory.currentTarget) {
+        creep.memory.currentTarget = Game.getObjectById(creep.memory.currentTarget.id);
+    }
+
     if(!creep.memory.currentTarget || !creep.memory.currentTarget.structureType || creep.memory.currentTarget.hits === creep.memory.currentTarget.hitsMax) {
         for(var i = 0; i < Memory.repairList.length; i++) {
             var repair = Game.getObjectById(Memory.repairList[i]);
