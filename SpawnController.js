@@ -3,18 +3,18 @@ module.exports = {
         {
             name: "Harvester",
             limit: 6,
-            body: [WORK, WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE],
+            body: [WORK, CARRY, CARRY, MOVE, MOVE],
             role: "Civilian"
         }, {
             name: "Mule",
             limit: 0,
-            body: [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE],
+            body: [CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
             role: "Civilian"
         }, {
             name: "Builder",
             limit: 6,
             // limit: 0,
-            body: [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE],
+            body: [WORK, CARRY, CARRY, MOVE, MOVE],
             role: "Civilian"
         }, {
             name: "Enforcer",
