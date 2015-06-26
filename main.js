@@ -13,6 +13,15 @@ Object.defineProperty(Source.prototype, "memory", {
         return Memory.sources[this.id];
     }
 });
+Memory.structures = Memory.structures || {};
+Object.defineProperty(Structure.prototype, "memory", {
+    enumerable : true,
+    configurable : false,
+    get: function () {
+        Memory.structures[this.id] = Memory.structures[this.id] || {};
+        return Memory.structures[this.id];
+    }
+});
 
 Creep.prototype.advMove = function(target) {
     var reCalc = false;
