@@ -3,13 +3,18 @@ module.exports = {
     decide: function(link) {
 
         if(link.energy) {
-            Memory.roleList.Builder.some(function(name) {
+            var closeBuilders = [];
+            Memory.roleList.Builder.forEach(function(name) {
                 var builder = Game.creeps[name];
-                if(builder.energy < builder.energyCapacity) {
-                    var energyLeft = builder.energyCapacity - builder.energy;
-                    link.transferEnergy(energyLeft < link.energy ? energyLeft : link.energy);
+                if(link.pos.isNearTo(builder) && builder.energy < builder.energyCapacity) {
+                    colseBuilders.push(builder);
                 }
             });
+            closeBuilders.sort(function(a, b) {
+                return a - b;
+            });
+            var energyLeft = closeBuilders[0].energyCapacity - closeBuilders[0].energy;
+            link.transferEnergy(closeBuilders[0], energyLeft < link.energy ? energyLeft : link.energy);
         }
     }
 };
