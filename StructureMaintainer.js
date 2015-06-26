@@ -10,8 +10,6 @@ module.exports = function() {
         }
         if(structure.structureType === STRUCTURE_LINK) {
             links.push(structure.id);
-        } else if(structure.structureType === STRUCTURE_SPAWN) {
-            spawns.push(structure.name);
         }
     });
 
@@ -24,7 +22,7 @@ module.exports = function() {
     });
 
     Memory.linkList = links;
-    Memory.spawnList = spawns;
+    Memory.spawnList = Game.spawns;
 
     newCandidates.forEach(function (structure) {
         if(Memory.repairList.indexOf(structure.id) === -1) {

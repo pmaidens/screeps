@@ -45,8 +45,8 @@ Creep.prototype.advMove = function(target) {
     }
 };
 
-Memory.spawnList.forEach(function(spawnName) {
-    spawnController.decide(Game.spawns[spawnName]);
+Memory.spawnList.forEach(function(spawn) {
+    spawnController.decide(Game.spawns[spawn.name]);
 });
 
 Memory.linkList.forEach(function(linkId) {
