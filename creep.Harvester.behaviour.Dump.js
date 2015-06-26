@@ -15,7 +15,7 @@ module.exports = function (creep) {
         if(!creep.memory.currentTarget) {
             creep.memory.currentTarget = creep.pos.findClosest(FIND_MY_STRUCTURES, {
                 filter: function(structure) {
-                     return (structure.structureType === STRUCTURE_EXTENSION) && (structure.energy < structure.energyCapacity);
+                     return (structure.structureType === STRUCTURE_EXTENSION || structure.structureType === STRUCTURE_LINK) && (structure.energy < structure.energyCapacity);
                 },
                 algorithm: "astar"
             });
