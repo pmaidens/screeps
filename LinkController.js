@@ -13,8 +13,10 @@ module.exports = {
             closeBuilders.sort(function(a, b) {
                 return a - b;
             });
-            var energyLeft = closeBuilders[0].energyCapacity - closeBuilders[0].energy;
-            link.transferEnergy(closeBuilders[0], energyLeft < link.energy ? energyLeft : link.energy);
+            if(closeBuilders.length) {
+                var energyLeft = closeBuilders[0].energyCapacity - closeBuilders[0].energy;
+                link.transferEnergy(closeBuilders[0], energyLeft < link.energy ? energyLeft : link.energy);
+            }
         }
     }
 };
