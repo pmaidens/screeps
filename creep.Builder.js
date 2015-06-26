@@ -27,7 +27,7 @@ module.exports = {
         Build: {
             algorithm: require("creep.Builder.behaviour.Build"),
             complete: function (creep) {
-                return creep.energy === 0 || (creep.currentTarget ? creep.currentTarget.progress === undefined : false);
+                return creep.energy === 0 || !creep.currentTarget;
             }
         },
         Upgrade: {
