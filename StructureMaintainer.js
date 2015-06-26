@@ -11,7 +11,7 @@ module.exports = function() {
         if(structure.structureType === STRUCTURE_LINK) {
             links.push(structure.id);
         } else if(structure.structureType === STRUCTURE_SPAWN) {
-            links.push(structure.name);
+            spawns.push(structure.name);
         }
     });
 
