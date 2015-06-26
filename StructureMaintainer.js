@@ -1,6 +1,5 @@
 module.exports = function() {
     console.log("Maintaining Structures... " + Game.getUsedCpu());
-    var room = Game.rooms[roomName];
     var newCandidates = [],
         links = [],
         spawns = [];
