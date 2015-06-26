@@ -2,6 +2,7 @@ var spawnController = require("SpawnController");
 var CreepController = require("CreepController");
 var MilitaryController = require("MilitaryController");
 var StructureMaintainer = require("StructureMaintainer");
+var linkController = require("LinkController");
 
 Memory.sources = Memory.sources || {};
 Object.defineProperty(Source.prototype, "memory", {
@@ -44,9 +45,13 @@ Creep.prototype.advMove = function(target) {
     }
 };
 
-for(var name in Game.spawns) {
-    spawnController.decide(Game.spawns[name]);
-}
+Memory.spawns.forEach(function(spawnName) {
+    spawnController.decide(Game.spawns[spawnName]);
+});
+
+Memory.links.forEach(function(linkId) {
+    linkController.decide(Game.getObjectById(linkId));
+});
 
 
 Object.keys(Memory.roleList).forEach(function(roleType) {
