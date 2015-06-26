@@ -7,7 +7,7 @@ module.exports = {
             Memory.roleList.Builder.forEach(function(name) {
                 var builder = Game.creeps[name];
                 if(link.pos.isNearTo(builder) && builder.energy < builder.energyCapacity) {
-                    colseBuilders.push(builder);
+                    closeBuilders.push(builder);
                 }
             });
             closeBuilders.sort(function(a, b) {
