@@ -1,10 +1,18 @@
 module.exports = function() {
     console.log("Maintaining Structures... " + Game.getUsedCpu());
+
+    var structures = Object.keys(Game.rooms).forEach(function (roomName) {
+        Game.rooms[roomName].find(FIND_STRUCTURES, {
+            filter: function (structure) {
+                return (structure.my === true || structure.structureType === "STRUCTURE_ROAD");
+            }
+        });
+    });
+
     var newCandidates = [],
         links = [],
         spawns = [];
-    Object.keys(Game.structures).forEach(function(structureId) {
-        structure = Game.structures[structureId];
+    structures.forEach(function(structure) {
         if(structure.hits < (structure.hitsMax / 2)) {
             newCandidates.push(structure);
         }
