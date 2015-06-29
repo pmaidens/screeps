@@ -1,12 +1,13 @@
 module.exports = function() {
     console.log("Maintaining Structures... " + Game.getUsedCpu());
 
-    var structures = Object.keys(Game.rooms).forEach(function (roomName) {
-        Game.rooms[roomName].find(FIND_STRUCTURES, {
+    var structures = [];
+    Object.keys(Game.rooms).forEach(function (roomName) {
+        structures = structures.concat(Game.rooms[roomName].find(FIND_STRUCTURES, {
             filter: function (structure) {
-                return (structure.my === true || structure.structureType === "STRUCTURE_ROAD");
+                return (structure.my === true || structure.structureType === STRUCTURE_ROAD);
             }
-        });
+        }));
     });
 
     var newCandidates = [],
