@@ -19,7 +19,7 @@ module.exports = {
                 }
             });
             closeBuilders.sort(function(a, b) {
-                return a - b;
+                return a.energy - b.energy;
             });
             if(closeBuilders.length) {
                 var energyLeft = closeBuilders[0].energyCapacity - closeBuilders[0].energy;
