@@ -38,7 +38,7 @@ module.exports = {
             recieveLinks.sort(function(a, b) {
                 return a.energy - b.energy;
             });
-            link.transferEnergy(recieveLinks, link.energyCapacity/2);
+            link.transferEnergy(recieveLinks[0], link.energyCapacity/2);
         }
     }
 };
