@@ -27,7 +27,7 @@ module.exports = {
             }
         }
 
-        if(link.memory.type === "dispatch" && link.energy === link.energyCapacity && !link.cooldown) {
+        if(link.memory.type === "dispatch" && link.energy >= link.energyCapacity/2 && !link.cooldown) {
             var recieveLinks = [];
             Memory.linkList.forEach(function(linkId) {
                 var targetLink = Game.structures[linkId];
