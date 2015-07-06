@@ -21,7 +21,7 @@ module.exports = {
         Repair: {
             algorithm: require("creep.Builder.behaviour.Repair"),
             complete: function (creep) {
-                return Memory.repairList[0] !== creep.memory.currentTarget.id;
+                return Memory.repairList[0] !== creep.memory.currentTarget.id || creep.energy === 0;
             }
         },
         Build: {
