@@ -38,5 +38,10 @@ module.exports = function() {
             Memory.repairList.push(structure.id);
         }
     });
+
+    Memory.repairList = Memory.repairList.sort(function (a, b) {
+        return Game.getObjectById(a).hits - Game.getObjectById(b).hits;
+    });
+
     console.log("Finished " + Game.getUsedCpu());
 };
