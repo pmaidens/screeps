@@ -37,20 +37,24 @@ module.exports = {
     decide: function(spawn) {
 
         // Determine what to spawn
+        var spawnMemory = {
+            type: null,
+            behaviour: "Spawning",
+            currentTarget: {},
+            movement: {
+                path: [],
+                step: 0,
+                lastPos: spawn.pos,
+                lastCalc: 0,
+                targetPos: spawn.pos
+            }
+        };
+
         if(SpawnQueueManager.getQueuePopulation()) {
-            if(spawn.canCreateCreep(SpawnQueueManager.getFirst())) {
-                var result = spawn.createCreep(SpawnQueueManager.getFirst(), undefined, {
-                    type: type.name,
-                    behaviour: "Spawning",
-                    currentTarget: {},
-                    movement: {
-                        path: [],
-                        step: 0,
-                        lastPos: spawn.pos,
-                        lastCalc: 0,
-                        targetPos: spawn.pos
-                    }
-                });
+            var firstCreep = SpawnQueueManager.getFirst();
+            if(spawn.canCreateCreep(firstCreep.body)) {
+                spawnMemory.type = firstCreep.name;
+                var result = spawn.createCreep(firstCreep.body, undefined, spawnMemory);
                 if(result === 0) {
                     SpawnQueueManager.removeFirst();
                 }
@@ -59,19 +63,8 @@ module.exports = {
             this.creepTypes.some(function(type) {
                 if(Memory.roleList[type.name].length < type.limit) {
                     if(spawn.canCreateCreep(type.body) >= 0) {
-
-                        var creepName = spawn.createCreep(type.body, undefined, {
-                            type: type.name,
-                            behaviour: "Spawning",
-                            currentTarget: {},
-                            movement: {
-                                path: [],
-                                step: 0,
-                                lastPos: spawn.pos,
-                                lastCalc: 0,
-                                targetPos: spawn.pos
-                            }
-                        });
+                        spawnMemory.type = type.name;
+                        var creepName = spawn.createCreep(type.body, undefined, spawnMemory);
 
                         Memory.roleList[type.name].push(creepName);
                         Memory.spawning.push(creepName);
