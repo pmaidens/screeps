@@ -1,3 +1,5 @@
+var SpawnQueueManager = require("SpawnQueueManager");
+
 module.exports = {
     creepTypes: [
         {
@@ -35,30 +37,50 @@ module.exports = {
     decide: function(spawn) {
 
         // Determine what to spawn
-        this.creepTypes.some(function(type) {
-            if(Memory.roleList[type.name].length < type.limit) {
-                if(spawn.canCreateCreep(type.body) >= 0) {
-
-                    var creepName = spawn.createCreep(type.body, undefined, {
-                        type: type.name,
-                        behaviour: "Spawning",
-                        currentTarget: {},
-                        movement: {
-                            path: [],
-                            step: 0,
-                            lastPos: spawn.pos,
-                            lastCalc: 0,
-                            targetPos: spawn.pos
-                        }
-                    });
-
-                    Memory.roleList[type.name].push(creepName);
-                    Memory.spawning.push(creepName);
-
-                    return true;
+        if(SpawnQueueManager.getQueuePopulation()) {
+            if(spawn.canCreateCreep(SpawnQueueManager.getFirst())) {
+                var result = spawn.createCreep(SpawnQueueManager.getFirst(), undefined, {
+                    type: type.name,
+                    behaviour: "Spawning",
+                    currentTarget: {},
+                    movement: {
+                        path: [],
+                        step: 0,
+                        lastPos: spawn.pos,
+                        lastCalc: 0,
+                        targetPos: spawn.pos
+                    }
+                });
+                if(result === 0) {
+                    SpawnQueueManager.removeFirst();
                 }
             }
-        });
+        } else {
+            this.creepTypes.some(function(type) {
+                if(Memory.roleList[type.name].length < type.limit) {
+                    if(spawn.canCreateCreep(type.body) >= 0) {
+
+                        var creepName = spawn.createCreep(type.body, undefined, {
+                            type: type.name,
+                            behaviour: "Spawning",
+                            currentTarget: {},
+                            movement: {
+                                path: [],
+                                step: 0,
+                                lastPos: spawn.pos,
+                                lastCalc: 0,
+                                targetPos: spawn.pos
+                            }
+                        });
+
+                        Memory.roleList[type.name].push(creepName);
+                        Memory.spawning.push(creepName);
+
+                        return true;
+                    }
+                }
+            });
+        }
 
         // If there is leftover energy and all creeps have been spawned, transfer it to the all the near builders
         if(spawn.energy > 0 && this.creepsComplete()) {
@@ -75,13 +97,15 @@ module.exports = {
     },
 
     creepsComplete: function() {
-        var complete = true;
-        this.creepTypes.some(function(type) {
-            if(type.limit > Memory.roleList[type.name].length) {
-                complete = false;
-                return true;
-            }
-        });
+        var complete = !SpawnQueueManager.getQueuePopulation();
+        if(complete) {
+            this.creepTypes.some(function(type) {
+                if(type.limit > Memory.roleList[type.name].length) {
+                    complete = false;
+                    return true;
+                }
+            });
+        }
         return complete;
     }
 };
