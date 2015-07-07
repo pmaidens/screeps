@@ -19,7 +19,6 @@ do
   stringFinal=${stringSub#..src.}
   echo $stringFinal
   echo build/$stringFinal
-  # cp $filep $PWD/build/$stringFinal
-  cp $filep /home/travis/build/pmaidens/screeps/build/LinkController.js
+  cp $f $PWD/build/$stringFinal
 
 done
