@@ -13,12 +13,10 @@ for f in $(find ./src -name '*.js')
 do
   echo "[INFO] Processing $f file..."
   echo $f
-  # filep=$(stat $f "%n")
-  # echo $filep
 
-  stringSub=${$filep//$stringSlash/$stringDot}
+  stringSub=${f//$stringSlash/$stringDot}
   echo $stringSub
-  stringFinal=${$stringSub#..src.}
+  stringFinal=${stringSub#..src.}
   echo $stringFinal
   echo build/$stringFinal
   cp $filep build/$stringFinal
