@@ -11,4 +11,4 @@ git add -f ./build
 git commit -m "Travis Build - Deploying to build folder"
 
 echo pushing...
-git push --force "https://${GH_TOKEN}@${GH_REF}" master
+git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master
