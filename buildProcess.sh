@@ -16,6 +16,7 @@ do
 
   stringSub=${filep//$stringSlash/$stringDot}
   stringFinal=${stringSub#..src.}
-  cp $filep $PWD/build/$stringFinal
+  echo $stringFinal
+  cp $filep build/$stringFinal
 
 done
