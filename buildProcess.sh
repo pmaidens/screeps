@@ -19,6 +19,6 @@ do
   stringFinal=${stringSub#..src.}
   echo $stringFinal
   echo build/$stringFinal
-  cp $filep ./build/$stringFinal
+  cp $filep $PWD/build/$stringFinal
 
 done
