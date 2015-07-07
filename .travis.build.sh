@@ -1,5 +1,7 @@
 set -e
 
+git checkout master
+
 ./buildProcess.sh
 
 git config user.name "Travis-CI"
