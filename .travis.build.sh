@@ -8,4 +8,4 @@ git config user.email "pmaidens@ualberta.ca"
 git add -f ./build
 git commit -m "Travis Build - Deploying to build folder"
 
-git push --force --quiet origin master
+git push --force --quiet "https://github.com/pmaidens/screeps.git" master
