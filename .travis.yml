@@ -1,1 +1,10 @@
-script: bash ./.travis.build.sh
+script: bash ./buildProcess.sh
+env:
+  matrix:
+    secure: DMhYL4qbSE+Khfzw02tcoKoRc83o6w4303QJD1gYrfH86xWd/GSudzxsFxi2nd2Me8ffssjo3q59lilLnwE+SdbzgZO5sxQDD+isMTQ0mYlsFTHoukCizqXqv+DHAOhoPfg5peX7ZGJ50iElb72zWhR1ieS10mjesvxGHk8BPMLRhnxdHibCUqH+BdtcPFcvkI3xNyqKzVKzoAv9nwP7zDwAPOldcGrHHRL8WnLzthjmjYCNcxcdvKTltfL9hd1pLXKh/orPau9WC2gLPQjElKOUoYbvemh2Xcl9M1dgrXVtTvO9/CDVzsxdRgsAuSnJJnSFzps7NNLi5wnzHHBtB6JWUHzu/NwY1ZyfiqBYyD65VJp0szueccgQP+h+xHJopZTjYGZkh6nA8s/g7m+Hhqdq5+Ll9rnthpNxVhLjj5OJjlEt7Pa7xEjwUR/ZWI4qC9X85TGXqJlWci97DyAP0Ih0LEaeI66W+btVYVT4DSAi3a4JVM6z4iBY4PKad4e00ymyWpYYrFVcS//FQFh0G8B83R1+66cFjMDqMXQrPc6nZQGluayS70kUMqjAadAsVmr0hFc3a1FMswkReGAVuttEsgMkUQgV/luv1HhNi4Wu/ofw2jiT5HWk5zwqaO3ZtmnVg46eeJnno+38M1maJhqb3/K19x0TGW9NJlNRxfs=
+after_success:
+- cat $DEPLOY_KEY > .travis/deploy_key.pem
+- chmod 600 .travis/deploy_key.pem
+- ssh-add .travis/deploy_key.pem
+- git remote add deploy DEPLOY_REPO_URI_GOES_HERE
+- git push deploy
