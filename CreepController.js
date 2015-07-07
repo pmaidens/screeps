@@ -1,11 +1,11 @@
 module.exports = {
 
     roleControllerMap: {
-        Harvester: require("creep.Harvester.ai"),
-        Enforcer: require("creep.Enforcer.ai"),
-        Builder: require("creep.Builder.ai"),
-        Ranger: require("creep.Ranger.ai"),
-        Mule: require("creep.Mule.ai")
+        Harvester: require("creep.Harvester"),
+        Enforcer: require("creep.Enforcer"),
+        Builder: require("creep.Builder"),
+        Ranger: require("creep.Ranger"),
+        Mule: require("creep.Mule")
     },
 
     decide: function(creep) {
