@@ -16,9 +16,9 @@ do
   # filep=$(stat $f "%n")
   # echo $filep
 
-  stringSub=${filep//$stringSlash/$stringDot}
+  stringSub=${$filep//$stringSlash/$stringDot}
   echo $stringSub
-  stringFinal=${stringSub#..src.}
+  stringFinal=${$stringSub#..src.}
   echo $stringFinal
   echo build/$stringFinal
   cp $filep build/$stringFinal
