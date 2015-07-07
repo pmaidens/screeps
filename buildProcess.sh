@@ -12,7 +12,8 @@ mkdir build
 for f in $(find ./src -name '*.js')
 do
   echo "[INFO] Processing $f file..."
-  filep=$(stat -f $f)
+  echo $f
+  filep=$(stat $f "%n")
   echo $filep
 
   stringSub=${filep//$stringSlash/$stringDot}
