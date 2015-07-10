@@ -12,7 +12,7 @@ git add -f ./build
 gitStatus=$(git status --porcelain)
 gitCount=${#gitStatus}
 if [[ $gitCount > 0 ]]; then
-    git commit -m "Travis Build - Deploying to build folder"
+    git commit -m "Travis Build - Deploying to build folder [ci skip]"
     echo [INFO] Pushing changes...
     git push --force "https://${GH_TOKEN}@${GH_REF}" master
 else
