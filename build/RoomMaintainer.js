@@ -1,7 +1,7 @@
 module.exports = function RoomMaintainer() {
     return {
         updateRooms: function () {
-            Object.keys(Game.Rooms).forEach(function (room) {
+            Object.keys(Game.rooms).forEach(function (room) {
                 this.maintainRoom(room);
             });
         },
