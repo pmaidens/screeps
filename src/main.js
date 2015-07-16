@@ -3,6 +3,7 @@ var CreepController = require("CreepController");
 var MilitaryController = require("MilitaryController");
 var StructureMaintainer = require("StructureMaintainer");
 var linkController = require("LinkController");
+var RoomMaintainer = require("RoomMaintainer");
 
 Memory.sources = Memory.sources || {};
 Object.defineProperty(Source.prototype, "memory", {
@@ -62,7 +63,6 @@ Memory.linkList.forEach(function(linkId) {
     linkController.decide(Game.getObjectById(linkId));
 });
 
-
 Object.keys(Memory.roleList).forEach(function(roleType) {
     Memory.roleList[roleType].forEach(function(name, index) {
         var spawningIndex = Memory.spawning.indexOf(name);
@@ -83,6 +83,10 @@ Object.keys(Memory.roleList).forEach(function(roleType) {
 
 if((Game.time % 101) === 0) {
     StructureMaintainer();
+}
+
+if((Game.time % 103) === 0) {
+    (new RoomMaintainer()).updateRooms();
 }
 
 // MilitaryController.calculateOrders();
