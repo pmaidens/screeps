@@ -81,6 +81,8 @@ Object.keys(Memory.roleList).forEach(function(roleType) {
     });
 });
 
+SquadManager();
+
 if((Game.time % 101) === 0) {
     StructureMaintainer();
 }
