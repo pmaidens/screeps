@@ -1,5 +1,6 @@
 module.exports = function SquadManager() {
     var squadNamePool = require("resources.teamNames");
+    var SpawnQueueManager = require("SpawnQueueManager");
 
     function calculateOpenSpace(id) {
         var target = Game.getObjectById(id);
@@ -57,12 +58,20 @@ module.exports = function SquadManager() {
 
     // Determine which squads should be active
     Object.keys(Memory.sources).forEach(function (sourceId) {
-        if(!Memory.sources.squad) {
+        if(!Memory.sources[sourceId].squad) {
             // Add a harvester squad
+            var squadName;
             var openSpaceAroundSource = calculateOpenSpace(sourceId);
             var optimalBody = calculateHarvesterBody(openSpaceAroundSource);
 
-            Memory.SquadManager.squads[squadNamePool[Memory.SquadManager.index]] = {
+            squadNamePool.some(function (name) {
+                if(Memory.SquadManager.squads[name] === undefined){
+                    squadName = name;
+                    return true;
+                }
+            });
+
+            Memory.SquadManager.squads[squadName] = {
                 type: "Harvester",
                 assignment: sourceId,
                 populationMax: openSpaceAroundSource,
@@ -71,7 +80,20 @@ module.exports = function SquadManager() {
             };
 
             Memory.SquadManager.index = Memory.SquadManager.index + 1;
+            Memory.sources[sourceId].squad = squadName;
         }
+    });
+
+    Object.keys(Memory.SquadManager.squads).forEach(function (squadName) {
+        var squadInfo = Memory.SquadManager.squads[squadName];
+        if(squadInfo.populationMax > squadInfo.members.length) {
+            SpawnQueueManager.add({
+                body: squadInfo.bodyRatio,
+                type: squadInfo.type,
+                squad: squadName
+            });
+        }
+        // TODO: Ensure squad assigment is still relevent and optimal
     });
 
 
