@@ -24,7 +24,7 @@ Object.defineProperty(Structure.prototype, "memory", {
     }
 });
 
-Creep.prototype.advMove = function(target) {
+Creep.prototype.convergingMove = function(target) {
     var reCalc = false;
 
     if(!target.pos) {
@@ -46,7 +46,36 @@ Creep.prototype.advMove = function(target) {
         this.memory.movement.lastCalc = this.memory.movement.path.length;
     }
     this.memory.movement.lastPos = this.pos;
-    if(this.memory.movement.path.length) {
+    if(this.memory.movement.path.length > this.memory.movement.step) {
+        this.move(this.memory.movement.path[this.memory.movement.step].direction);
+        this.memory.movement.step = this.memory.movement.step + 1;
+        return OK;
+    } else {
+        return ERR_NOT_FOUND;
+    }
+};
+
+Creep.prototype.advMove = function(target) {
+    var reCalc = false;
+
+    if(!target.pos) {
+        return;
+    }
+
+    if (!this.memory.movement || !Array.isArray(this.memory.movement.path) || !this.memory.movement.lastPos || this.memory.movement.step === undefined) {
+        reCalc = true;
+    }
+
+    if(reCalc || !this.memory.movement.path.length || target.pos !== this.memory.movement.targetPos || JSON.stringify(this.pos) === this.memory.movement.lastPos ) {
+        this.memory.movement = {
+            path: this.pos.findPathTo(target.pos.x, target.pos.y),
+            step: 0,
+            lastPos: this.pos,
+            targetPos: target.pos
+        };
+    }
+    this.memory.movement.lastPos = this.pos;
+    if(this.memory.movement.path.length > this.memory.movement.step) {
         this.move(this.memory.movement.path[this.memory.movement.step].direction);
         this.memory.movement.step = this.memory.movement.step + 1;
         return OK;
