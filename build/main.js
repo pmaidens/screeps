@@ -72,7 +72,7 @@ Creep.prototype.advMove = function(target) {
         reCalc = true;
     }
 
-    if (this.memory.movement.sleep > 0) {
+    if (this.memory.movement.sleep > 0 && target.pos === this.memory.movement.targetPos) {
         this.memory.movement.sleep = this.memory.movement.sleep - 1;
         return ERR_TIRED;
     }
