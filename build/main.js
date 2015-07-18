@@ -68,16 +68,16 @@ Creep.prototype.advMove = function(target) {
 
     if (!Array.isArray(this.memory.movement.path) || !this.memory.movement.lastPos || this.memory.movement.step === undefined || this.memory.movement.sleep === undefined) {
         reCalc = true;
-    } else if (JSON.stringify(this.pos) === this.memory.movement.lastPos && this.memory.movement.sleep === 0){
+    } else if (JSON.stringify(this.pos) === JSON.stringify(this.memory.movement.lastPos) && this.memory.movement.sleep === 0){
         reCalc = true;
     }
 
-    if (this.memory.movement.sleep > 0 && JSON.stringify(target.pos) === this.memory.movement.targetPos) {
+    if (this.memory.movement.sleep > 0 && JSON.stringify(target.pos) === JSON.stringify(this.memory.movement.targetPos)) {
         this.memory.movement.sleep = this.memory.movement.sleep - 1;
         return ERR_TIRED;
     }
 
-    if(reCalc || !this.memory.movement.path.length || JSON.stringify(target.pos) !== this.memory.movement.targetPos ) {
+    if(reCalc || !this.memory.movement.path.length || JSON.stringify(target.pos) !== JSON.stringify(this.memory.movement.targetPos) ) {
         this.memory.movement = {
             path: this.pos.findPathTo(target.pos.x, target.pos.y),
             step: 0,
