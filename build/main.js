@@ -72,12 +72,12 @@ Creep.prototype.advMove = function(target) {
         reCalc = true;
     }
 
-    if (this.memory.movement.sleep > 0 && target.pos === this.memory.movement.targetPos) {
+    if (this.memory.movement.sleep > 0 && JSON.stringify(target.pos) === this.memory.movement.targetPos) {
         this.memory.movement.sleep = this.memory.movement.sleep - 1;
         return ERR_TIRED;
     }
 
-    if(reCalc || !this.memory.movement.path.length || target.pos !== this.memory.movement.targetPos ) {
+    if(reCalc || !this.memory.movement.path.length || JSON.stringify(target.pos) !== this.memory.movement.targetPos ) {
         this.memory.movement = {
             path: this.pos.findPathTo(target.pos.x, target.pos.y),
             step: 0,
