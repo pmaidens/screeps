@@ -62,19 +62,34 @@ Creep.prototype.advMove = function(target) {
         return;
     }
 
-    if (!this.memory.movement || !Array.isArray(this.memory.movement.path) || !this.memory.movement.lastPos || this.memory.movement.step === undefined) {
+    if (!this.memory.movement) {
+        this.memory.movement = {};
+    }
+
+    if (!Array.isArray(this.memory.movement.path) || !this.memory.movement.lastPos || this.memory.movement.step === undefined || this.memory.movement.sleep === undefined) {
+        reCalc = true;
+    } else if (JSON.stringify(this.pos) === this.memory.movement.lastPos && this.memory.movement.sleep === 0){
         reCalc = true;
     }
 
-    if(reCalc || !this.memory.movement.path.length || target.pos !== this.memory.movement.targetPos || JSON.stringify(this.pos) === this.memory.movement.lastPos ) {
+    if (this.memory.movement.sleep > 0) {
+        this.memory.movement.sleep = this.memory.movement.sleep - 1;
+        return ERR_TIRED;
+    }
+
+    if(reCalc || !this.memory.movement.path.length || target.pos !== this.memory.movement.targetPos ) {
         this.memory.movement = {
             path: this.pos.findPathTo(target.pos.x, target.pos.y),
             step: 0,
             lastPos: this.pos,
-            targetPos: target.pos
+            targetPos: target.pos,
+            sleep: 0
         };
     }
     this.memory.movement.lastPos = this.pos;
+    if(!this.memory.movement.path.length) {
+        this.memory.movement.sleep = 5;
+    }
     if(this.memory.movement.path.length > this.memory.movement.step) {
         this.move(this.memory.movement.path[this.memory.movement.step].direction);
         this.memory.movement.step = this.memory.movement.step + 1;
