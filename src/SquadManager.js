@@ -24,6 +24,34 @@ module.exports = function SquadManager() {
         return result;
     }
 
+    function calculateHarvesterBody(availableSpace) {
+        /**
+         * Sources have a total of 3000 energyCapacity, and regenerate every 300
+         * game ticks. As a result, we need to harvest 10 energy every game
+         * tick. Each WORK part can harvest 2 energy per turn. So each squad
+         * needs to have a total of 5 WORK parts. Calculte the most minimal body
+         * composition ratio based on the number of available spaces around the
+         * source.
+         */
+        var workParts = Math.ceil(5/availableSpace);
+        var carryParts = workParts/2;
+        var moveParts = workParts + carryParts;
+        var partCounts = {
+            WORK: workParts,
+            CARRY: carryParts,
+            MOVE: moveParts
+        };
+        var body = [];
+
+        Object.keys(partCounts).forEach(function (part) {
+            for(var i = 0; i < partCounts[part]; i++) {
+                body.push(part);
+            }
+        });
+
+        return body;
+    }
+
     Memory.SquadManager = Memory.SquadManager || {};
     Memory.SquadManager.index = Memory.SquadManager.index || 0;
 
@@ -31,16 +59,18 @@ module.exports = function SquadManager() {
     Object.keys(Memory.sources).forEach(function (sourceId) {
         if(!Memory.sources.squad) {
             // Add a harvester squad
+            var openSpaceAroundSource = calculateOpenSpace(sourceId);
+            var optimalBody = calculateHarvesterBody(openSpaceAroundSource);
+
             Memory.SquadManager.squads[squadNamePool[Memory.SquadManager.index]] = {
                 type: "Harvester",
                 assignment: sourceId,
-                population: {
-                    max: calculateOpenSpace(), // Need to calculate
-                    min: 0, // Need to calculate
-                },
-                body: [], // Need to calculate
-                members: null
+                populationMax: openSpaceAroundSource,
+                bodyRatio: optimalBody,
+                members: []
             };
+
+            Memory.SquadManager.index = Memory.SquadManager.index + 1;
         }
     });
 
