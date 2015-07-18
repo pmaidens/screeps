@@ -1,6 +1,6 @@
 set -e
 
-git checkout master
+git checkout $TRAVIS_BRANCH
 
 ./buildProcess.sh
 
