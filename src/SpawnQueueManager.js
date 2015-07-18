@@ -1,9 +1,9 @@
 module.exports = {
-    add: function (role) {
+    add: function (creepInfo) {
         var queue;
         Memory.spawnQueue = Memory.spawnQueue || [];
         queue = Memory.spawnQueue;
-        queue.push(role);
+        queue.push(creepInfo);
         Memory.spawnQueue = queue;
     },
     removeFirst: function () {

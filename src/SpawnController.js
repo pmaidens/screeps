@@ -56,10 +56,14 @@ module.exports = function() {
             if(SpawnQueueManager.getQueuePopulation()) {
                 var firstCreep = SpawnQueueManager.getFirst();
                 if(spawn.canCreateCreep(firstCreep.body)) {
-                    spawnMemory.type = firstCreep.name;
-                    var result = spawn.createCreep(firstCreep.body, undefined, spawnMemory);
-                    if(result === 0) {
+                    spawnMemory.type = firstCreep.type;
+                    spawnMemory.squad = firstCreep.squad;
+                    var creepName = spawn.createCreep(firstCreep.body, undefined, spawnMemory);
+                    if(typeof creepName !== "number") { // If there was an error, this will be a number
                         SpawnQueueManager.removeFirst();
+                        Memory.roleList[type.name].push(creepName);
+                        Memory.spawning.push(creepName);
+                        Memory.SquadManager.squads[firtCreep.squad].members.push(creepName);
                     }
                 }
             } else {
