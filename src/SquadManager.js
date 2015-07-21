@@ -45,8 +45,8 @@ module.exports = function SquadManager() {
         var moveParts = workParts + carryParts;
         var partCounts = {
             WORK: workParts,
-            CARRY: carryParts,
-            MOVE: moveParts
+            MOVE: moveParts,
+            CARRY: carryParts
         };
         var body = [];
 
@@ -94,7 +94,7 @@ module.exports = function SquadManager() {
         var squadInfo = Memory.SquadManager.squads[squadName];
         if(squadInfo.populationMax > squadInfo.members.length) {
             SpawnQueueManager.add({
-                body: squadInfo.bodyRatio,
+                bodyRatio: squadInfo.bodyRatio,
                 type: squadInfo.type,
                 squad: squadName
             });
