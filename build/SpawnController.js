@@ -55,11 +55,16 @@ module.exports = function() {
 
             if(SpawnQueueManager.getQueuePopulation()) {
                 var firstCreep = SpawnQueueManager.getFirst();
-                if(spawn.canCreateCreep(firstCreep.body)) {
-                    spawnMemory.type = firstCreep.name;
-                    var result = spawn.createCreep(firstCreep.body, undefined, spawnMemory);
-                    if(result === 0) {
+                var body = this.calculateBodyBasedOnRatio(firstCreep.bodyRatio);
+                if(spawn.canCreateCreep(body)) {
+                    spawnMemory.type = firstCreep.type;
+                    spawnMemory.squad = firstCreep.squad;
+                    var creepName = spawn.createCreep(body, undefined, spawnMemory);
+                    if(typeof creepName !== "number") { // If there was an error, this will be a number
                         SpawnQueueManager.removeFirst();
+                        Memory.roleList[type.name].push(creepName);
+                        Memory.spawning.push(creepName);
+                        Memory.SquadManager.squads[firtCreep.squad].members.push(creepName);
                     }
                 }
             } else {
@@ -103,6 +108,46 @@ module.exports = function() {
                 });
             }
             return complete;
+        },
+
+        calculateBodyBasedOnRatio: function (ratio) {
+            var i = 0;
+            var body = ratio.slice(); // Clone array
+            var continueAdding = true;
+
+            while(this.getCostOfBody(body) <= this.calculateUsableEnergy()) {
+                body.push(ratio[i]);
+                i = i++ % ratio.length;
+            }
+
+            return body;
+        },
+
+        getCostOfBody: function (body) {
+            var bodyCost = 0;
+            var bodyCosts = {
+                move: 50,
+                work: 100,
+                carry: 50,
+                attack: 80,
+                ranged_attack: 150,
+                heal: 200,
+                tough: 10
+            };
+
+            body.forEach(function (part) {
+                var cost = bodyCosts[part];
+                if(cost !== undefined) {
+                    bodyCost+= cost;
+                }
+            });
+            return bodyCost;
+        },
+
+        calculateUsableEnergy: function () {
+            // I am just going to hard code this for now. 500 should be pretty good.
+            // TODO: Calculate how much energy is the most that it should use
+            return 500;
         }
     };
 }();
