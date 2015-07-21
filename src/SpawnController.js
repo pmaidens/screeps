@@ -55,6 +55,7 @@ module.exports = function() {
 
             if(SpawnQueueManager.getQueuePopulation()) {
                 var firstCreep = SpawnQueueManager.getFirst();
+                // TODO: Need to calculate how many times we should do the body ratio
                 if(spawn.canCreateCreep(firstCreep.body)) {
                     spawnMemory.type = firstCreep.type;
                     spawnMemory.squad = firstCreep.squad;

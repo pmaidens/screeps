@@ -3,9 +3,15 @@ module.exports = function SquadManager() {
     var SpawnQueueManager = require("SpawnQueueManager");
 
     function calculateOpenSpace(id) {
+        var area;
         var target = Game.getObjectById(id);
-        var area = Game.rooms[target.pos.roomName].lookAtArea(target.pos.x+1, target.pos.y-1, target.pos.x-1, target.pos.y+1);
         var result = 0;
+
+        if(!target.pos) {
+            return;
+        }
+
+        area = Game.rooms[target.pos.roomName].lookAtArea(target.pos.y-1, target.pos.x-1, target.pos.y+1, target.pos.x+1);
 
         Object.keys(area).forEach(function (x) {
             Object.keys(area[x]).forEach(function (y) {
