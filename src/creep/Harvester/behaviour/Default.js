@@ -1,10 +1,10 @@
 module.exports = function (creep) {
 
     // If at full capacity, transfer the energy to any available mules
-    if(creep.energy === creep.energyCapacity) {
+    if(creep.energy === creep.carryCapacity) {
         var mules = creep.pos.findInRange(FIND_MY_CREEPS,1,{
             filter: function (creep) {
-                return creep.type === "Mule" && creep.energy < creep.energyCapacity;
+                return creep.type === "Mule" && creep.energy < creep.carryCapacity;
             }
         });
 
@@ -21,7 +21,7 @@ module.exports = function (creep) {
 	    creep.memory.currentTarget = Game.getObjectById(creep.memory.currentTarget.id);
 	}
 
-    if(!creep.memory.currentTarget || (creep.memory.currentTarget.structureType ? ((creep.memory.currentTarget.energy === creep.memory.currentTarget.energyCapacity) || (creep.energy === 0)) : (creep.energy === creep.energyCapacity) ) ) {
+    if(!creep.memory.currentTarget || (creep.memory.currentTarget.structureType ? ((creep.memory.currentTarget.energy === creep.memory.currentTarget.energyCapacity) || (creep.energy === 0)) : (creep.energy === creep.carryCapacity) ) ) {
         var target;
 
         if(creep.energy === 0) {

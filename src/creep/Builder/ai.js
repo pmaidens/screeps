@@ -15,7 +15,7 @@ module.exports = {
         Collect: {
             algorithm: require("creep.Builder.behaviour.Collect"),
             complete: function (creep) {
-                return creep.energy === creep.energyCapacity;
+                return creep.energy === creep.carryCapacity;
             }
         },
         Repair: {
