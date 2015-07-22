@@ -82,8 +82,8 @@ module.exports = function() {
             if(spawn.energy > 0 && this.creepsComplete()) {
                 Memory.roleList.Builder.some(function(name) {
                     var creep = Game.creeps[name];
-                    if(spawn.pos.isNearTo(creep) && creep.energy < creep.energyCapacity) {
-                        spawn.transferEnergy(creep, (creep.energyCapacity > spawn.energy ? spawn.energy : creep.energyCapacity));
+                    if(spawn.pos.isNearTo(creep) && creep.energy < creep.carryCapacity) {
+                        spawn.transferEnergy(creep, (creep.carryCapacity > spawn.energy ? spawn.energy : creep.carryCapacity));
                     }
                     if(spawn.energy === 0) {
                         return true; // break
