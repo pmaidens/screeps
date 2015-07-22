@@ -24,6 +24,22 @@ Object.defineProperty(Structure.prototype, "memory", {
     }
 });
 
+Object.defineProperty(Creep.prototype, "energy", {
+    enumerable : true,
+    configurable : true,
+    writable : false,
+    get: function () {
+        return this.carry.energy;
+    }
+});
+Object.defineProperty(Creep.prototype, "energyCapacity", {
+    enumerable : true,
+    configurable : true,
+    writable : false,
+    get: function () {
+        return this.carryCapacity;
+    }
+});
 Creep.prototype.advMove = function(target) {
     var reCalc = false;
 
