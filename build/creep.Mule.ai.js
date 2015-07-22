@@ -9,7 +9,7 @@ module.exports = {
         Collect: {
             algorithm: require("creep.Mule.behaviour.Collect"),
             complete: function (creep) {
-                return creep.energy === creep.carryCapacity;
+                return creep.energy === creep.energyCapacity;
             }
         },
         Dump: {
@@ -23,7 +23,7 @@ module.exports = {
     compute: function(creep) {
 
         if(this.behaviours[creep.memory.behaviour].complete(creep)) {
-            if(creep.energy === creep.carryCapacity) {
+            if(creep.energy === creep.energyCapacity) {
                 creep.memory.behaviour = "Dump";
             } else {
                 creep.memory.behaviour = "Collect";

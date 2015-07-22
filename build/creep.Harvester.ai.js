@@ -15,7 +15,7 @@ module.exports = {
         Harvest: {
             algorithm: require("creep.Harvester.behaviour.Harvest"),
             complete: function(creep) {
-                return creep.energy === creep.carryCapacity;
+                return creep.energy === creep.energyCapacity;
             }
         },
         Dump: {
@@ -29,10 +29,10 @@ module.exports = {
     compute: function(creep) {
 
         // If at full capacity, transfer the energy to any available mules
-        if(creep.energy === creep.carryCapacity) {
+        if(creep.energy === creep.energyCapacity) {
             var mules = creep.pos.findInRange(FIND_MY_CREEPS,1,{
                 filter: function (creep) {
-                    return creep.type === "Mule" && creep.energy < creep.carryCapacity;
+                    return creep.type === "Mule" && creep.energy < creep.energyCapacity;
                 }
             });
 
@@ -45,7 +45,7 @@ module.exports = {
         }
 
         if(this.behaviours[creep.memory.behaviour].complete(creep)) {
-            if(creep.energy === creep.carryCapacity) {
+            if(creep.energy === creep.energyCapacity) {
                 creep.memory.behaviour = "Dump";
             } else {
                 creep.memory.behaviour = "Harvest";

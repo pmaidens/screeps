@@ -4,7 +4,7 @@ module.exports = function (creep) {
         creep.memory.currentTarget = Game.getObjectById(creep.memory.currentTarget.id);
     }
 
-    if(!creep.memory.currentTarget || (creep.memory.currentTarget.progress ? (creep.energy === 0) : (creep.energy === creep.carryCapacity || !creep.memory.currentTarget.energy) ) || (creep.memory.currentTarget.structureType === STRUCTURE_RAMPART && creep.memory.currentTarget.hits >= 1500) ) {
+    if(!creep.memory.currentTarget || (creep.memory.currentTarget.progress ? (creep.energy === 0) : (creep.energy === creep.energyCapacity || !creep.memory.currentTarget.energy) ) || (creep.memory.currentTarget.structureType === STRUCTURE_RAMPART && creep.memory.currentTarget.hits >= 1500) ) {
         var target;
         if(!creep.memory.currentTarget || creep.energy === 0) {
             var elements = [FIND_MY_SPAWNS, FIND_DROPPED_ENERGY, FIND_MY_STRUCTURES];
