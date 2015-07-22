@@ -99,7 +99,7 @@ module.exports = function SquadManager() {
                 squad: squadName
             });
         }
-        // TODO: Ensure squad assigment is still relevent and optimal
+        // TODO: Ensure squad assignment is still relevent and optimal
     });
 
 

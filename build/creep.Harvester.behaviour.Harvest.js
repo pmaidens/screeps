@@ -5,9 +5,14 @@ module.exports = function (creep) {
 
 	// Aquire target
 	if(!creep.memory.currentTarget || creep.memory.currentTarget.ticksToRegeneration === undefined || !creep.memory.currentTarget.energy || !creep.memory.movement.path.length) {
-		creep.memory.currentTarget = creep.pos.findClosest(FIND_SOURCES_ACTIVE, {
-    	    algorithm: "astar"
-	    });
+		if(creep.memory.squad) {
+			creep.memory.currentTarget = Game.getObjectById(Memory.SquadManager.squads[creep.memory.squad].assignment);
+		} else {
+			Game.notify(JSON.stringify(creep) + " did not have a squad assignment", 10);
+			creep.memory.currentTarget = creep.pos.findClosest(FIND_SOURCES_ACTIVE, {
+	    	    algorithm: "astar"
+		    });
+		}
 	}
 
 	// Execute on target
