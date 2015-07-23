@@ -28,14 +28,14 @@ Object.defineProperty(Creep.prototype, "energy", {
     enumerable : true,
     configurable : true,
     get: function () {
-        return this.carry.energy;
+        return this.carry ? this.carry.energy : 0;
     }
 });
 Object.defineProperty(Creep.prototype, "energyCapacity", {
     enumerable : true,
     configurable : true,
     get: function () {
-        return this.carryCapacity;
+        return this.carryCapacity || 0;
     }
 });
 Creep.prototype.advMove = function(target) {
