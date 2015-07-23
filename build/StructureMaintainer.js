@@ -5,7 +5,7 @@ module.exports = function() {
     Object.keys(Game.rooms).forEach(function (roomName) {
         structures = structures.concat(Game.rooms[roomName].find(FIND_STRUCTURES, {
             filter: function (structure) {
-                return (structure.my === true || structure.structureType === STRUCTURE_ROAD);
+                return (structure.my === true || structure.structureType === STRUCTURE_ROAD || structure.structureType === STRUCTURE_WALL);
             }
         }));
     });
@@ -13,8 +13,9 @@ module.exports = function() {
     var newCandidates = [],
         links = [],
         extensions = [];
+    var largeStructures = [STRUCTURE_WALL, STRUCTURE_RAMPART];
     structures.forEach(function(structure) {
-        if(structure.hits < (structure.hitsMax / 2)) {
+        if(largeStructures.indexOf(structure.structureType) === -1 ? structure.hits < (structure.hitsMax / 2) : structure.hits < 3000000) {
             newCandidates.push(structure);
         }
         if(structure.structureType === STRUCTURE_LINK) {
@@ -27,7 +28,7 @@ module.exports = function() {
     Memory.repairList.forEach(function (id) {
         var structure = Game.getObjectById(id);
 
-        if(!structure || structure.hits >= structure.hitsMax*0.75) {
+        if(!structure || largeStructures.indexOf(structure.structureType) === -1 ? structure.hits >= structure.hitsMax*0.75 : structure.hits > 4000000) {
             Memory.repairList.splice(Memory.repairList.indexOf(id), 1);
         }
     });
