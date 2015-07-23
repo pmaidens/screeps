@@ -1,25 +1,28 @@
 module.exports = function (creep) {
+    var optimalStructureId;
+
+    function isStructureAvailable(structure) {
+        if(structure.energy < structure.energyCapacity && (structure.pos.room.name > creep.pos.room.name ? false : (structure.pos.room.name < creep.pos.room.name)) ) {
+            optimalStructureId = structure.id;
+            return true;
+        }
+    }
+
     if(creep.memory.currentTarget) {
         creep.memory.currentTarget = Game.getObjectById(creep.memory.currentTarget.id);
     }
 
     // Aquire target
     if(!creep.memory.currentTarget || !creep.memory.currentTarget.structureType || creep.memory.currentTarget.energy === creep.memory.currentTarget.energyCapacity) {
-        creep.memory.currentTarget = creep.pos.findClosest(FIND_MY_SPAWNS, {
-            filter: function(spawn) {
-                    return (spawn.energy < spawn.energyCapacity);
-                },
-            algorithm: "astar"
-        });
+        if(Object.keys(Game.spawns).some(function (spawnName) {
+            return isStructureAvailable(Game.spawns[spawnName]);
+        })) {} else if (Memory.extensionList.some(function (extensionId) {
+            return isStructureAvailable(Game.getObjectById(extensionId));
+        })) {} else if (Memory.linkList.some(function (linkId) {
+            return isStructureAvailable(Game.getObjectById(linkId));
+        })) {}
 
-        if(!creep.memory.currentTarget) {
-            creep.memory.currentTarget = creep.pos.findClosest(FIND_MY_STRUCTURES, {
-                filter: function(structure) {
-                     return (structure.structureType === STRUCTURE_EXTENSION || structure.structureType === STRUCTURE_LINK) && (structure.energy < structure.energyCapacity);
-                },
-                algorithm: "astar"
-            });
-        }
+        creep.memory.currentTarget = optimalStructureId;
     }
 
     // Execute on target
