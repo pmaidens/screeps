@@ -2,7 +2,7 @@ module.exports = function (creep) {
     var optimalStructureId;
 
     function isStructureAvailable(structure) {
-        if(structure.energy < structure.energyCapacity && (structure.pos.room.name > creep.pos.room.name ? false : (structure.pos.room.name < creep.pos.room.name)) ) {
+        if(structure.energy < structure.energyCapacity && structure.pos.roomName === creep.pos.roomName ) {
             optimalStructureId = structure.id;
             return true;
         }
@@ -22,7 +22,7 @@ module.exports = function (creep) {
             return isStructureAvailable(Game.getObjectById(linkId));
         })) {}
 
-        creep.memory.currentTarget = optimalStructureId;
+        creep.memory.currentTarget = Game.getObjectById(optimalStructureId);
     }
 
     // Execute on target
