@@ -19,6 +19,8 @@ module.exports = function() {
         }
         if(structure.structureType === STRUCTURE_LINK) {
             links.push(structure.id);
+        } else if(structure.structureType === STRUCTURE_SPAWN) {
+            spawns.push(structure.id);
         }
     });
 
@@ -31,7 +33,7 @@ module.exports = function() {
     });
 
     Memory.linkList = links;
-    Memory.spawnList = Game.spawns;
+    Memory.spawnList = spawns;
 
     newCandidates.forEach(function (structure) {
         if(Memory.repairList.indexOf(structure.id) === -1) {

@@ -81,7 +81,7 @@ module.exports = function SquadManager() {
                 type: "Harvester",
                 assignment: sourceId,
                 populationMax: openSpaceAroundSource,
-                bodyRatio: optimalBody,
+                optimalBody: optimalBody,
                 members: []
             };
 
@@ -94,12 +94,16 @@ module.exports = function SquadManager() {
         var squadInfo = Memory.SquadManager.squads[squadName];
         if(squadInfo.populationMax > squadInfo.members.length) {
             SpawnQueueManager.add({
-                bodyRatio: squadInfo.bodyRatio,
+                optimalBody: squadInfo.optimalBody,
                 type: squadInfo.type,
                 squad: squadName
             });
         }
-        // TODO: Ensure squad assignment is still relevent and optimal
+        /*
+         * TODO: Ensure squad assignment is still relevent and optimal
+         * The above doesn't need to be done for Harvesters, so I am going to
+         * just leave it for now.
+         */
     });
 
 
