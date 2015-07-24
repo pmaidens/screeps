@@ -55,7 +55,8 @@ module.exports = function() {
 
             if(SpawnQueueManager.getQueuePopulation()) {
                 var firstCreep = SpawnQueueManager.getFirst();
-                var body = this.calculateBodyBasedOnRatio(firstCreep.bodyRatio);
+                // var body = this.calculateBodyBasedOnRatio(firstCreep.optimalBody);
+                var body = firstCreep.optimalBody;
                 if(spawn.canCreateCreep(body)) {
                     spawnMemory.type = firstCreep.type;
                     spawnMemory.squad = firstCreep.squad;
@@ -145,9 +146,16 @@ module.exports = function() {
         },
 
         calculateUsableEnergy: function () {
-            // I am just going to hard code this for now. 500 should be pretty good.
-            // TODO: Calculate how much energy is the most that it should use
-            return 500;
+            var energyHolders = ["spawnList", "extensionList"];
+            var useableEnergy = 0;
+
+            energyHolders.forEach(function (list) {
+                Memory[list].forEach(function (structureId) {
+                    useableEnergy += Game.getObjectById(structureId).energy;
+                });
+            });
+
+            return useableEnergy * 2 / 3;
         }
     };
 }();
