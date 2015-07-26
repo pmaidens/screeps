@@ -2,7 +2,9 @@ set -e
 
 git checkout $TRAVIS_BRANCH
 
+pwd
 PWD=pwd
+echo $PWD
 
 cd buildProcess
 cargo run
