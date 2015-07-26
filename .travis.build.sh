@@ -8,6 +8,7 @@ echo $PWD
 
 cd buildProcess
 cargo run
+echo cd $PWD
 cd $PWD
 pwd
 
