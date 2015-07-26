@@ -1,3 +1,4 @@
+language: rust
 script: bash ./.travis.build.sh
 env:
   global:
