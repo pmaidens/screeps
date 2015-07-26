@@ -2,6 +2,8 @@ set -e
 
 git checkout $TRAVIS_BRANCH
 
+curl -sSf https://static.rust-lang.org/rustup.sh | sh
+
 cd buildProcess
 cargo run
 
