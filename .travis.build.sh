@@ -2,6 +2,9 @@ set -e
 
 git checkout $TRAVIS_BRANCH
 
+cd buildProcess
+cargo run
+
 ./buildProcess.sh
 
 git config user.name "Travis-CI"
