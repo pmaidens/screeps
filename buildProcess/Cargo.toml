@@ -1,0 +1,7 @@
+[package]
+name = "buildProcess"
+version = "0.1.0"
+authors = ["Peter Maidens <p.m.maidens@gmail.com>"]
+
+[dependencies]
+regex = "0.1.8"
