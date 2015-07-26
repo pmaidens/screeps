@@ -3,13 +3,13 @@ set -e
 git checkout $TRAVIS_BRANCH
 
 pwd
-PWD=$(pwd)
-echo $PWD
+cur=$(pwd)
+echo $cur
 
 cd buildProcess
 cargo run
-echo cd $PWD
-cd $PWD
+echo cd $cur
+cd $cur
 pwd
 
 git config user.name "Travis-CI"
