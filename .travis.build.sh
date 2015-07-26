@@ -3,6 +3,7 @@ set -e
 git checkout $TRAVIS_BRANCH
 
 curl -sSf https://static.rust-lang.org/rustup.sh -o rustup.sh
+chmod u+x ./rustup.sh
 
 echo y | ./rustup.sh
 
