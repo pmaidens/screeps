@@ -1,3 +1,5 @@
+#![allow(non_snake_case)]
+
 extern crate regex;
 
 use std::fs::{self, PathExt, metadata, copy};
@@ -6,10 +8,16 @@ use std::env;
 use regex::Regex;
 use std::io;
 
+#[allow(unused_must_use)]
 fn main() {
     let mut src_dir = env::current_dir().unwrap();
     src_dir.pop();
     src_dir.push("src");
+
+    let mut build_dir = env::current_dir().unwrap();
+    build_dir.pop();
+    build_dir.push("build");
+    fs::create_dir(build_dir);
 
     println!("The current directory is {}", src_dir.display());
 
@@ -25,7 +33,6 @@ fn get_all_relative_paths(dir: &Path, original_path: &Path) -> io::Result<()> {
             if metadata(entry.path().as_os_str()).unwrap().is_dir() {
                 try!(get_all_relative_paths(&entry.path(), original_path));
             } else {
-                // println!("The current file is {}", entry.path().display());
                 let relative_path = create_relative_path(entry.path(), original_path);
                 let new_file_name = rename_file(relative_path);
                 try!(move_file_to_build(entry.path(), new_file_name));
