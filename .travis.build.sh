@@ -5,7 +5,7 @@ git checkout $TRAVIS_BRANCH
 curl -sSf https://static.rust-lang.org/rustup.sh -o rustup.sh
 chmod u+x ./rustup.sh
 
-yes | ./rustup.sh
+./rustup.sh --yes
 
 cd buildProcess
 cargo run
