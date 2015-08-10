@@ -19,7 +19,7 @@ module.exports = function (creep) {
     }
 
     // Execute against target
-    if(creep.memory.currentTarget) {
+    if(creep.memory.currentTarget && creep.memory.currentTarget.pos) {
         if(creep.pos.isNearTo(creep.memory.currentTarget.pos.x, creep.memory.currentTarget.pos.y)) {
             if(creep.memory.currentTarget instanceof Energy) {
                 creep.pickup(Game.getObjectById(creep.memory.currentTarget.id));

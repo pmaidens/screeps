@@ -34,7 +34,6 @@ module.exports = function() {
     });
 
     Memory.linkList = links;
-    Memory.spawnList = Game.spawns;
     Memory.extensionList = extensions;
 
     newCandidates.forEach(function (structure) {

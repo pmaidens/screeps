@@ -22,7 +22,7 @@ module.exports = {
 
     compute: function(creep) {
 
-        if(this.behaviours[creep.memory.behaviour].complete(creep)) {
+        if(!creep.memory.behaviour || this.behaviours[creep.memory.behaviour].complete(creep)) {
             if(creep.energy === creep.energyCapacity) {
                 creep.memory.behaviour = "Dump";
             } else {

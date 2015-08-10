@@ -4,7 +4,7 @@ module.exports = {
             Game.rooms.E6S5.find(FIND_HOSTILE_SPAWNS),
             Game.rooms.E6S5.find(FIND_HOSTILE_CREEPS)
         );
-        if (hostiles.length > 0 && Memory.roleList.Ranger.length >= 5) {
+        if (hostiles.length > 0 && Memory.roleLists.Ranger.length >= 5) {
         // if(false) {
             // Memory.Military.Target = hostiles[0].id;
         } else {

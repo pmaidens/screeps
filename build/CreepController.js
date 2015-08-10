@@ -9,6 +9,9 @@ module.exports = {
     },
 
     decide: function(creep) {
-        this.roleControllerMap[creep.memory.type].compute(creep);
+        var roleController = this.roleControllerMap[creep.memory.type];
+        if(roleController) {
+            roleController.compute(creep);
+        }
     }
 };

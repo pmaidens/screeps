@@ -21,7 +21,7 @@ module.exports = {
         Repair: {
             algorithm: require("creep.Builder.behaviour.Repair"),
             complete: function (creep) {
-                return Memory.repairList[0] !== creep.memory.currentTarget.id || creep.energy === 0;
+                return !creep.memory.currentTarget || !Memory.repairList || Memory.repairList[0] !== creep.memory.currentTarget.id || creep.energy === 0;
             }
         },
         Build: {
@@ -41,10 +41,10 @@ module.exports = {
 
     compute: function(creep) {
 
-        if(this.behaviours[creep.memory.behaviour].complete(creep)) {
+        if(!creep.memory.behaviour || this.behaviours[creep.memory.behaviour].complete(creep)) {
             if(creep.energy === 0) {
                 creep.memory.behaviour = "Collect";
-            } else if(Memory.repairList.length !== 0) {
+            } else if(Memory.repairList && Memory.repairList.length !== 0) {
                 creep.memory.behaviour = "Repair";
             } else if((creep.memory.constructionTarget = creep.pos.findClosest(FIND_CONSTRUCTION_SITES))) {
                 creep.memory.behaviour = "Build";

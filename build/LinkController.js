@@ -2,6 +2,15 @@ module.exports = {
 
     decide: function(link) {
 
+        if(!(link instanceof Structure) || link.structureType !== STRUCTURE_LINK ) {
+            // Throw an error - Is not a valid link
+            // Maybe I should make an error handling/reporting module of some sort...
+        }
+
+        if(!link.memory) {
+            // Throw an error - link does not have memory
+        }
+
         if(!link.memory.type) {
             if(link.pos.findInRange(FIND_SOURCES, 2).length) {
                 link.memory.type = "dispatch";
@@ -12,7 +21,7 @@ module.exports = {
 
         if(link.energy) {
             var closeBuilders = [];
-            Memory.roleList.Builder.forEach(function(name) {
+            Memory.roleLists.Builder.forEach(function(name) {
                 var builder = Game.creeps[name];
                 if(link.pos.isNearTo(builder) && builder.energy < builder.energyCapacity) {
                     closeBuilders.push(builder);

@@ -38,8 +38,8 @@ module.exports = function() {
         ],
 
         decide: function(spawn) {
-
             // Determine what to spawn
+
             var spawnMemory = {
                 type: null,
                 behaviour: "Spawning",
@@ -64,12 +64,12 @@ module.exports = function() {
                 }
             } else {
                 this.creepTypes.some(function(type) {
-                    if(Memory.roleList[type.name].length < type.limit) {
+                    if(Memory.roleLists[type.name].length < type.limit) {
                         if(spawn.canCreateCreep(type.body) >= 0) {
                             spawnMemory.type = type.name;
                             var creepName = spawn.createCreep(type.body, undefined, spawnMemory);
 
-                            Memory.roleList[type.name].push(creepName);
+                            Memory.roleLists[type.name].push(creepName);
                             Memory.spawning.push(creepName);
 
                             return true;
@@ -80,7 +80,7 @@ module.exports = function() {
 
             // If there is leftover energy and all creeps have been spawned, transfer it to the all the near builders
             if(spawn.energy > 0 && this.creepsComplete()) {
-                Memory.roleList.Builder.some(function(name) {
+                Memory.roleLists.Builder.some(function(name) {
                     var creep = Game.creeps[name];
                     if(spawn.pos.isNearTo(creep) && creep.energy < creep.energyCapacity) {
                         spawn.transferEnergy(creep, (creep.energyCapacity > spawn.energy ? spawn.energy : creep.energyCapacity));
@@ -96,7 +96,7 @@ module.exports = function() {
             var complete = !SpawnQueueManager.getQueuePopulation();
             if(complete) {
                 this.creepTypes.some(function(type) {
-                    if(type.limit > Memory.roleList[type.name].length) {
+                    if(type.limit > Memory.roleLists[type.name].length) {
                         complete = false;
                         return true;
                     }
