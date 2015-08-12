@@ -69,6 +69,16 @@ Creep.prototype.advMove = function(target) {
     }
 };
 
+if(Memory.roleLists === undefined) {
+    Memory.roleLists = {};
+}
+if(Memory.repairList === undefined) {
+    Memory.repairList = [];
+}
+if(Memory.spawning === undefined) {
+    Memory.spawning = [];
+}
+
 Object.keys(Game.spawns).forEach(function(spawnName) {
     spawnController.decide(Game.spawns[spawnName]);
 });
@@ -80,9 +90,6 @@ Memory.linkList.forEach(function(linkId) {
     linkController.decide(Game.getObjectById(linkId));
 });
 
-if(Memory.roleLists === undefined) {
-    Memory.roleLists = {};
-}
 Object.keys(Memory.roleLists).forEach(function(roleType) {
     Memory.roleLists[roleType].forEach(function(name, index) {
         var spawningIndex = Memory.spawning.indexOf(name);

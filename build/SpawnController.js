@@ -64,6 +64,9 @@ module.exports = function() {
                 }
             } else {
                 this.creepTypes.some(function(type) {
+                    if(!Memory.roleLists[type.name]) {
+                        Memory.roleLists[type.name] = [];
+                    }
                     if(Memory.roleLists[type.name].length < type.limit) {
                         if(spawn.canCreateCreep(type.body) >= 0) {
                             spawnMemory.type = type.name;
