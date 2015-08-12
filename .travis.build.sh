@@ -2,15 +2,11 @@ set -e
 
 git checkout $TRAVIS_BRANCH
 
-pwd
 cur=$(pwd)
-echo $cur
 
 cd buildProcess
 cargo run
-echo cd $cur
 cd $cur
-pwd
 
 git config user.name "Travis-CI"
 git config user.email "peter_maidens@intuit.com"

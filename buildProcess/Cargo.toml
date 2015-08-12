@@ -5,3 +5,5 @@ authors = ["Peter Maidens <p.m.maidens@gmail.com>"]
 
 [dependencies]
 regex = "0.1.8"
+hyper = "0.6.6"
+rustc-serialize = "0.3.15"
