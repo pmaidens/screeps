@@ -10,7 +10,11 @@ EndTick();
 
 function SetupPrototypes() {
     Room.prototype.getLOIs = function() {
-        var lois = this.memory.sources || []; // Need to clone that
+        var lois = [];
+        this.memory.sources.forEach(function(sourceId) {
+            lois.push(sourceId);
+        });
+
         if(this.controller) {
             lois.push(this.controller.id);
         }
