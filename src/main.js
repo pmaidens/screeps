@@ -29,7 +29,7 @@ function SetupRooms() {
         if (!room.memory.calcComplete || Memory.recalcRooms) {
             // Do one time room calculations here
 
-            if(!room.memory.sources) {
+            if(!room.memory.sources || Memory.recalcRooms) {
                 room.memory.sources = room.find(FIND_SOURCES).map(function (sourceObject) {
                     return sourceObject.id;
                 });
