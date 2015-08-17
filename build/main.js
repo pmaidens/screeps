@@ -15,6 +15,10 @@ function SetupPrototypes() {
             lois.push(sourceId);
         });
 
+        this.memory.spawns.forEach(function (spawnId) {
+            lois.push(spawnId);
+        });
+
         if(this.controller) {
             lois.push(this.controller.id);
         }
@@ -27,12 +31,23 @@ function SetupRooms() {
         var room = Game.rooms[roomName];
 
         if (!room.memory.calcComplete || Memory.recalcRooms) {
+            room.memory.calcComplete = false;
             // Do one time room calculations here
 
             if(!room.memory.sources || Memory.recalcRooms) {
                 room.memory.sources = room.find(FIND_SOURCES).map(function (sourceObject) {
                     return sourceObject.id;
                 });
+            }
+
+            if(!room.memory.spawns || Memory.recalcRooms) {
+                var spawns = [];
+                Object.keys(Game.spawns).forEach(function (spawn) {
+                    if(Game.spawns[spawn].pos.roomName === room.name) {
+                        spawns.push(Game.spawns[spawn].id);
+                    }
+                });
+                room.memory.spawns = spawns;
             }
 
             room.memory.calcComplete = true;
