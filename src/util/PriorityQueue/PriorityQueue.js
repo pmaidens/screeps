@@ -22,9 +22,9 @@ module.exports =function() {
         },
 
         pushNode: function (node) {
-            var targetIndex = this._getPriorityIndex(priority);
+            var targetIndex = this._getPriorityIndex(node.priority);
 
-            if(this._comparePriorityAtIndex(targetIndex, priority)) {
+            if(this._comparePriorityAtIndex(targetIndex, node.priority)) {
                 node.data.forEach(function (value) {
                     this.heap[targetIndex].push(value);
                 });
@@ -45,6 +45,15 @@ module.exports =function() {
             return result;
         },
 
+        multiPop: function (count) {
+            var result = [];
+            while(count && this.length) {
+                result.push(this.pop());
+                count--;
+            }
+            return result;
+        },
+
         _getPriorityIndex: function (priority) {
             var targetIndex = this.heap.length;
 
@@ -59,7 +68,7 @@ module.exports =function() {
         },
 
         _comparePriorityAtIndex: function (index, priority) {
-            return this.heap[targetIndex] && this.heap[targetIndex].priority === priority;
+            return this.heap[index] && this.heap[index].priority === priority;
         },
 
         toString: function () {
